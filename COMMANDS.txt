@@ -1,4 +1,4 @@
-A339 PM 1.0.0-beta - what you can say to the SayIntentions co-pilot (intercom)
+A339 PM 1.0.1-beta - what you can say to the SayIntentions co-pilot (intercom)
 ==============================================================================
 
 Say it naturally: 'landing lights on', 'turn off the seat belts', 'strobe on, landing lights off'.
