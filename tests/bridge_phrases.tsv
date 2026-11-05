@@ -1,0 +1,326 @@
+# Bridge phrase tests : the pilot's words (or 'ATC:<instruction>', 'PAIR:<pilot words> => <her answer>')
+# <TAB> what the bridge must find ('-' = nothing). Run: powershell -File tests\run_tests.ps1
+# Every line comes from a real flight or a case seen while building the bridge. Add a line for each new fix.
+Approach procedure.	proc/approach
+After landing procedure	proc/after_landing
+After landing procedure, please.	proc/after_landing
+Parking procedure	proc/parking
+Parker and procedure	proc/parking
+Disregard checklist	-
+Approach checklist.	-
+After landing checklist	-
+Good. Can you start, preliminary cockpit preparation procedure, please?	proc/preliminary
+Great  Uh, now continue with, uh, cockpit preparation procedure	proc/cockpit_preparation
+Cockpit preparation checklist, please	-
+Before start procedure	proc/before_start
+Before start checklist	-
+Engine start procedure	proc/engine_start
+Confirm engine start sequence 2-1	proc/engine_start_21
+Confirm.	confirm
+After start procedure	proc/after_start
+Run the after-start checklist, please	-
+Taxi procedure	proc/taxi
+Lineup procedure.	proc/lineup
+Line up procedure	proc/lineup
+After takeoff procedure	proc/after_takeoff
+After take-off procedure	proc/after_takeoff
+Climb procedure	proc/climb
+Descent preparation procedure	proc/descent_preparation
+Descent procedure	proc/descent
+Securing the aircraft procedure	proc/securing
+Is the after landing procedure done?	-
+Don't start the parking procedure yet	-
+After landing procedure done	-
+Set flat level 220 and push	ALT|22000|PUSH
+Set heading 165	HDG|165
+Set squawk four four five six.	SQUAWK|4456
+Set QNH 1029	QNH|1029
+Flaps one	FLAPS ONE SET
+Start APU.	APU START
+APU start please	APU START
+Could you start the APU?	APU START
+Don't start the APU yet	-
+APU master on	APU MASTER ON
+APU bleed on	APU BLEED ON
+Is the APU start complete?	-
+Starting APU	APU START
+Flips two.	FLAPS TWO SET
+Flaps three	FLAPS THREE SET
+Flaps four	FLAPS FULL SET
+Flaps full	FLAPS FULL SET
+Flaps up	FLAPS UP SET
+Set flaps to 2	FLAPS TWO SET
+Flaps 1	FLAPS ONE SET
+Flaps one, check	FLAPS ONE SET
+Don't set flaps one yet	-
+What flaps do we need?	-
+Flaps setting	-
+Turn on engine anti ice	ENGINE ANTI ICE ON
+Turn on wing anti-ice	WING ANTI ICE ON
+Uh, turn off all anti-ice	ENGINE ANTI ICE OFF + WING ANTI ICE OFF
+Anti ice off	ENGINE ANTI ICE OFF + WING ANTI ICE OFF
+Turn on all anti-ice	ENGINE ANTI ICE ON + WING ANTI ICE ON
+Anti ice on	-
+Engine anti ice off	ENGINE ANTI ICE OFF
+Wing anti ice off	WING ANTI ICE OFF
+All anti ice on and off	-
+Gear up	LANDING GEAR UP
+Confirm sequence 21	proc/engine_start_21
+No, it's lights off	NOSE LIGHT OFF
+Nose lights off	NOSE LIGHT OFF
+Nose light taxi	NOSE LIGHT TAXI
+Nose light takeoff	NOSE LIGHT TAKEOFF
+Turn off the nose light	NOSE LIGHT OFF
+Taxi lights on	NOSE LIGHT TAXI
+Takes a light off	NOSE LIGHT OFF
+Runway turnoff lights off	RUNWAY TURN OFF LIGHTS OFF
+Runway turn off lights on	RUNWAY TURN OFF LIGHTS ON
+Turn on runway turnoff lights	RUNWAY TURN OFF LIGHTS ON
+Nose light off and runway turnoff lights off	NOSE LIGHT OFF + RUNWAY TURN OFF LIGHTS OFF
+Landing lights on	LANDING LIGHTS ON
+Turn off the landing lights	LANDING LIGHTS OFF
+Turn off all anti-ice	ENGINE ANTI ICE OFF + WING ANTI ICE OFF
+Laps up	FLAPS UP SET
+ATC:Climb FL360.	ALT|36000
+ATC:Climb and maintain FL360	ALT|36000
+ATC:Descend to FL240, then contact Lumpur Center on 132.6	ALT|24000
+ATC:Turn left heading 165, vectors for the ILS-C runway 8L approach.	HDG|165
+ATC:Descend and maintain 5000.	ALT|5000
+ATC:Contact Yangon Center on 124.75. Squawk 5711.	SQUAWK|5711
+ATC:Descend via KAKA1K, to 5,000 into Lumpur. QNH 1012	QNH|1012
+Climb FL360	ALT|36000
+Set flight level 270	ALT|27000
+Can you ask ATC for FL370?	-
+Can you request a flight level 350 from the dispatcher?	-
+Request flight level 350	-
+Ask ATC for flight level 350	-
+Ask for direct, heading 120	-
+Tell control we need speed 250	-
+Request higher, flight level 380 please	-
+Set flight level 350	ALT|35000
+Climb flight level 350	ALT|35000
+Cleared flight level 350, set it	ALT|35000
+Can you set heading 175 please	HDG|175
+Set speed 250	SPD|250
+Set squawk 1416	SQUAWK|1416
+Set QNH 1013	QNH|1013
+Yes	confirm
+Clips three	FLAPS THREE SET
+Start API	APU START
+Start APU	APU START
+Set Q&A to 1012	QNH|1012
+Set QNH 1012	QNH|1012
+Girdown	LANDING GEAR DOWN
+Can you ask ATC for the flight level 370?	-
+Set flight level three niner zero	ALT|39000
+Go around	proc/go_around
+Go-around, flaps!	proc/go_around
+Going around	proc/go_around
+Speedbird 123 are going around	proc/go_around
+Missed approach	proc/go_around
+Go around altitude 3000 set	ALT|3000
+Go around altitude, set	-
+If we go around, we turn right	-
+Expect missed approach procedure	-
+Are we going around?	-
+Don't go around	-
+Go around procedure	proc/go_around
+Lips two.	FLAPS TWO SET
+Plebs tree.	-
+Laps three	FLAPS THREE SET
+ATC:When ready descend FL290. Cleared for the LUNI4L arrival.	ALT|29000
+ATC:Execute missed approach procedure. Contact Departure on 118.48.	-
+ATC:descend FL120, cross DEVKU at or above FL120	ALT|12000
+When ready set flight level 290	-
+Engine start procedure, sequence 2-1	proc/engine_start_21
+Engine start procedure sequence one two	proc/engine_start_12
+Start engines	proc/engine_start
+Start the engines please	proc/engine_start
+Confirm sequence 2-1	proc/engine_start_21
+Confirm engine start	confirm
+Engine start checklist	-
+Abort engine start	proc/engine_start_abort
+Stop engine start	proc/engine_start_abort
+Is engine start complete?	-
+Don't start the engines yet	-
+Sequence two one	proc/engine_start_21
+Gear down	LANDING GEAR DOWN
+Set gear down.	LANDING GEAR DOWN
+Landing gear up	LANDING GEAR UP
+Don't put the gear down yet	-
+Is the gear down?	-
+Gear up, flaps up	FLAPS UP SET + LANDING GEAR UP
+Climb 7,000 speedbird one two three.	ALT|7000
+Seatbelts on	SEAT BELT SIGNS ON
+Seat belt currently in auto  Set to on, please	SEAT BELT SIGNS ON
+Sit belts on,	SEAT BELT SIGNS ON
+No portable electronic devices set on	NO PORTABLE ELECTRONIC DEVICES ON
+No portable devices  Auto	NO PORTABLE ELECTRONIC DEVICES AUTO
+Landing lights off	LANDING LIGHTS OFF
+Linden Lights Owen	LANDING LIGHTS ON
+Wind lights off	WING LIGHTS OFF
+Turn on wing lights	WING LIGHTS ON
+Strobe on	STROBE LIGHTS ON
+Strobe lights auto	STROBE LIGHTS AUTO
+Beacon on	BEACON ON
+Nav lights on	NAV AND LOGO LIGHTS ON
+Turn off the nav and logo lights	NAV AND LOGO LIGHTS OFF
+Set interior light to on, please	DOME LIGHT BRIGHT
+Dome light dim	DOME LIGHT DIM
+Emergency exit lights arm	EMERGENCY EXIT LIGHTS ARM
+Set left wiper to slow position, please	CAPTAIN WIPER SLOW
+Turn off Captain Viper	CAPTAIN WIPER OFF
+Wipers off	WIPERS OFF
+Engine 1 anti ice on	ENGINE 1 ANTI ICE ON
+Engine anti-ice on	ENGINE ANTI ICE ON
+APU bleed off	APU BLEED OFF
+APU off	APU OFF
+APU battery on	APU BATTERY ON
+Batteries on	BATTERIES ON
+Battery 1 off	BATTERY 1 OFF
+External power on	EXTERNAL POWER ON
+Ext power off	EXTERNAL POWER OFF
+Packs off	PACKS OFF
+Pack one off	PACK 1 OFF
+Pack 2 on	PACK 2 ON
+Set pack flow high	PACK FLOW HIGH
+Pack flow  Too high	PACK FLOW HIGH
+Crossbleed open	CROSS BLEED OPEN
+X bleed auto	CROSS BLEED AUTO
+Engine bleeds off	ENGINE BLEEDS OFF
+All fuel pumps on	ALL FUEL PUMPS ON
+Fuel pumps off	ALL FUEL PUMPS OFF
+Standby fuel pumps on	STANDBY FUEL PUMPS ON
+Crew oxygen on	CREW OXYGEN SUPPLY ON
+Crew oxygen supply off	CREW OXYGEN SUPPLY OFF
+ADIRS nav	ALL ADIRS NAV
+Set ADIRS to navigation	ALL ADIRS NAV
+ADIRS 1 att	ADIRS IR 1 ATT
+Set auto brake low	AUTOBRAKE LOW
+Auto brake max	AUTOBRAKE MAX
+Autobrake medium	AUTOBRAKE MEDIUM
+Arm spoilers	GROUND SPOILERS ARM
+Ground spoilers disarm	GROUND SPOILERS DISARM
+Parking brake set	PARKING BRAKE SET
+Release parking brake	PARKING BRAKE RELEASE
+Flight directors on	FLIGHT DIRECTORS ON
+FD off	FLIGHT DIRECTORS OFF
+TCAS TA RA	TCAS TA RA
+Set TCAS to TA only	TCAS TA ONLY
+TCAS standby	TCAS STANDBY
+Transponder auto	TRANSPONDER AUTO
+Transponder standby	TRANSPONDER STANDBY
+Squawk ident	TRANSPONDER IDENT PRESS
+Weather radar on	WEATHER RADAR ON
+Radar and PWS off	WEATHER RADAR OFF + PREDICTIVE WINDSHEAR OFF
+Predictive windshear auto	PREDICTIVE WINDSHEAR AUTO
+Terrain on captain ND	TERRAIN ON CAPTAIN ND ON
+Terrain on first officer ND off	TERRAIN ON FIRST OFFICER ND OFF
+Captain ND mode arc	CAPTAIN ND MODE ARC
+First officer ND range 40	FIRST OFFICER ND RANGE 40
+Engine mode ignition	ENGINE MODE IGNITION
+Engine mode normal	ENGINE MODE NORMAL
+Takeoff config test	TAKEOFF CONFIG TEST TEST
+Probe heat on	PROBE AND WINDOW HEAT ON
+Cabin pressure mode auto	CABIN PRESSURE MODE AUTO
+Set trim tank mode forward	-
+Tail tank transfer on	TAIL TANK FORWARD TRANSFER ON
+Brake fans on	BRAKE FANS ON
+ECAM recall	ECAM RECALL PRESS
+Press ECAM clear	ECAM CLEAR PRESS
+Show engine page	ECAM PAGE ENGINE
+ECAM status page	ECAM PAGE STATUS
+Master caution reset	MASTER CAUTION RESET
+Press localizer button	LOCALIZER MODE PRESS
+Set localizer and approach buttons	LOCALIZER MODE PRESS
+Autopilot 1 on	AUTOPILOT 1 ENGAGE
+Engage autopilot 2	AUTOPILOT 2 ENGAGE
+Autothrust	-
+Heading pull	HEADING KNOB PULL
+Pull heading knob	HEADING KNOB PULL
+Push altitude knob	ALTITUDE KNOB PUSH
+Set barrow QNH	BAROMETERS QNH
+Set borrow standard	BAROMETERS STANDARD
+Set Borough Standard	BAROMETERS STANDARD
+Search standard Q&A	-
+Baro unit hectopascal	BARO UNIT HECTOPASCAL
+Cockpit door close	COCKPIT DOOR CLOSE
+Lock the cockpit door	COCKPIT DOOR CLOSE
+Recorder ground control on	RECORDER GROUND CONTROL ON
+GPWS flap mode off	GPWS FLAP MODE OFF
+GPWS off	GPWS SYSTEM OFF
+Commercial off	COMMERCIAL OFF
+Galley on	GALLEY ON
+Set isolation valve to open	-
+Set speed brake full	-
+Autopilot off	-
+Approach procedure	proc/approach
+Approach checklist	-
+Engine and tires on	-
+Check	-
+Set	-
+On check	-
+Off checker.	-
+Takeoff no blue.	-
+Linden Noble, check	-
+Advised. Check.	-
+Cleared to land runway 01 left	-
+Traffic in sight	-
+Expect late landing clearance, uh, runway 01 left, Speedbird 123	-
+Right. Heading three five five cleared to visual Runway 01 left Speedbird 123.	HDG|355
+Don't turn off the landing lights	-
+Are the landing lights on?	-
+Strobe on, landing lights off	STROBE LIGHTS ON + LANDING LIGHTS OFF
+Turn on the interior lights	DOME LIGHT BRIGHT
+Lights off	-
+APU start	APU START
+Cross feed open	FUEL CROSSFEED OPEN
+Transponder off	TRANSPONDER STANDBY
+Parking brake on	PARKING BRAKE SET
+PAIR:Puckflow High => Sure, setting pack flow high	pilot: PACK FLOW HIGH
+PAIR:Lips two. => Flaps two set	pilot: FLAPS TWO SET
+PAIR:Plebs tree. => Say again, please	-
+PAIR:Web 2 => Not clear what you said. Say again	-
+PAIR:Engine and tires on => Do you mean the engines and tires are on? I'm not sure what you'd like me to do with that	-
+PAIR:Search standard Q&A => I'm not sure what you mean by "Search standard Q&A." Could you clarify what you're looking for	-
+PAIR:Set borrow standard => Sure, setting the barometers to standard	pilot: BAROMETERS STANDARD
+PAIR:Gear up => Gear coming up	pilot: LANDING GEAR UP
+PAIR:Gir op => Gear coming up	her: LANDING GEAR UP
+PAIR:Check => Seat belts???	-
+PAIR:Set => Takeoff speeds and thrust???	-
+PAIR:Landing checklist => Landing Checklist  <break time="1.5s" />	-
+PAIR:Hello. How are you doing today? => Hey, I'm doing well, thanks.	-
+PAIR:Have you ever been to Kuala Lumpur? => Not yet, but I've heard it's a fascinating city.	-
+PAIR:Any briefing for the arrival? => We're arriving at Kuala Lumpur on runway 14L, ILS. QNH is one-zero-one-two; Flaps full, VREF 134 knots	-
+PAIR:The same procedure => Same descent procedure, understood.	-
+PAIR:Expect late landing clearance, uh, runway 01 left, Speedbird 123 => Roger, runway 01L. We'll wait for the landing clearance	-
+PAIR:Traffic Insight, Speedbird 123 => Traffic's ten o'clock, four miles, at four thousand feet-an Airbus	-
+PAIR:Speedbird 123, uh, mayday, mayday, mayday, minimum fuel on board => Mayday declared. I'm transmitting it to Departure now	-
+PAIR:Sit belts on, => Seat belts on, Captain	pilot: SEAT BELT SIGNS ON
+PAIR:Linden lights Owen => Sure, switching the landing lights on	pilot: LANDING LIGHTS ON
+PAIR:Lanting lice off => Sure, turning the landing lights off	her: LANDING LIGHTS OFF
+PAIR:Turn on the strove => Sure, strobe lights on	her: STROBE LIGHTS ON
+PAIR:Wing light => Do you want the wing lights on or off?	-
+PAIR:Puck one of => Sure, switching pack one off	her: PACK 1 OFF
+PAIR:Engine anti ice of => Sure, engine anti-ice off	her: ENGINE ANTI ICE OFF
+PAIR:Go around => Go-around. Set go-around thrust and follow the published missed approach; I'll advise Tower	pilot: proc/go_around
+PAIR:Start API => I'm not sure what you mean by "Start API	pilot: APU START
+PAIR:Taxi light of => Sure, switching the taxi light off	her: NOSE LIGHT OFF
+PAIR:Autopilot off => Sure, I'll disconnect the autopilot	-
+Puckflow High	PACK FLOW HIGH
+Set backflow high	PACK FLOW HIGH
+Pack flow normal	PACK FLOW NORMAL
+Packs flow low	PACK FLOW LOW
+PACK one OFF.	PACK 1 OFF
+Packs on	PACKS ON
+Pakflow Auto	PACK FLOW NORMAL
+PAIR:Pakflow Auto => Sure, setting pack flow to auto	pilot: PACK FLOW NORMAL
+PAIR:Pekflo otto => Sure, setting pack flow to auto	her: PACK FLOW NORMAL
+Engine mode auto	ENGINE MODE NORMAL
+Seat belts auto	SEAT BELT SIGNS AUTO
+Strobe auto	STROBE LIGHTS AUTO
+The scent preparation procedure	proc/descent_preparation
+The scent procedure	proc/descent
+Decent procedure	proc/descent
+Engine start abort	proc/engine_start_abort
+Stop the start	proc/engine_start_abort

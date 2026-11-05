@@ -1,0 +1,9 @@
+# build output (the zip goes to a GitHub release, not into the repository)
+dist/
+# never commit a developer key or the bridge's runtime files
+si_dev_key.txt
+*_log.txt
+*_status.txt
+si_say_queue.txt
+flight_state.txt
+__pycache__/
