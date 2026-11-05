@@ -2,12 +2,12 @@ A339 PM 1.0.0-beta - what you can say to the SayIntentions co-pilot (intercom)
 ==============================================================================
 
 Say it naturally: 'landing lights on', 'turn off the seat belts', 'strobe on, landing lights off'.
-The bridge finds the item in your words; if it finds nothing, it looks at her answer
+The bridge finds the item in your words; if it finds nothing, it looks at the PM's answer
 ('Sure, setting pack flow high'). Several orders in one phrase: separate them with a comma or 'and'.
 Nothing is done for questions ('are the landing lights on?'), negations ('don't ...'),
 requests to ATC ('ask ATC for flight level 350') or checklist answers ('check', 'set').
 
-PROCEDURES  (say the word 'procedure'; the word 'checklist' starts her own checklist instead)
+PROCEDURES  (say the word 'procedure'; the word 'checklist' starts the PM's own checklist instead)
 ------------------------------------------------------------------------------
   preliminary cockpit preparation procedure     on ground (batteries, APU BAT, ext power, oxygen, tests)
   cockpit preparation procedure                 on ground (fuel pumps, packs, ADIRS NAV, lights, signs)
@@ -27,7 +27,7 @@ PROCEDURES  (say the word 'procedure'; the word 'checklist' starts her own check
   after landing procedure                       flaps 0, spoilers disarm, lights, radar/PWS off, ...
   parking procedure                             engines off + parking brake: beacon off, fuel pumps off ...
   securing the aircraft procedure               ADIRS off, oxygen off, APU off, batteries off
-  She reports '<name> procedure done.' A procedure never sets SEAT BELTS or PED to OFF.
+  The PM reports '<name> procedure done.' A procedure never sets SEAT BELTS or PED to OFF.
 
 FLAPS, GEAR (one flap step at a time, VFE / S / F speed checks)
 ------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ FCU, ALTIMETERS, TRANSPONDER (numbers)
   flight level 350 / altitude 5000 [push|pull]   in flight: set and pushed (managed)
   QNH 1013 / altimeter 29.92       baro out of STD          baro standard / set baro STD
   squawk 4721
-  When she handles the radio, ATC instructions (heading, altitude, speed, QNH, squawk) are set too.
+  When the PM handles the radio, ATC instructions (heading, altitude, speed, QNH, squawk) are set too.
 
 OTHER
 ------------------------------------------------------------------------------

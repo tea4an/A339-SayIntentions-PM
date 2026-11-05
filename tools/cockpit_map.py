@@ -2,13 +2,13 @@
 
 python tools/cockpit_map.py   writes
   src/A339_pm_2_switches.lua   the switches for FlyWithLua (order codes, no X-Plane command : FlyWithLua's limit)
-  docs/si_items.json           her PM ACTIONS items (challenge, response, code) for Checklist Tuner v2
+  docs/si_items.json           the co-pilot's PM ACTIONS items (challenge, response, code) for Checklist Tuner v2
   docs/A339_pm_actions.md      the same, readable
 
 Each switch : E(id, name, code, positions, **options). A position : P(word, actions..., **options).
 Actions are Lua statements (helpers L, S, C, H below). Options : ground=True (refused in flight),
 confirm="question?" (read back, done on "confirm"), confirm_in_flight="question?", check="lua function name".
-Codes : a switch owns code .. code + 9 (one per position), never renumber a switch already in her checklist.
+Codes : a switch owns code .. code + 9 (one per position), never renumber a switch already in the co-pilot's checklist.
 Values marked "# autotest" are to be checked in the sim. DANGEROUS elements (fire, jettison, IDG, ditching, RAM AIR,
 masters, ADR / IR off, PRIM / SEC...) are not here on purpose.
 """
@@ -275,17 +275,17 @@ with open(os.path.join(ROOT, "src", "A339_pm_2_switches.lua"), "w", encoding="ut
     f.write("\n".join(out))
 
 # PF orders and procedures (codes of A339_pm_1_core.lua and A339_pm_3_procedures.lua)
-# flaps : one distinct challenge per position ("FLAPS / ONE" and "FLAPS / TWO" differed only by the response and she
+# flaps : one distinct challenge per position ("FLAPS / ONE" and "FLAPS / TWO" differed only by the response and the co-pilot
 # pressed TWO on "flaps one")
 EXTRA = [("FLAPS UP", "SET", 10), ("FLAPS ONE", "SET", 11), ("FLAPS TWO", "SET", 12), ("FLAPS THREE", "SET", 13),
          ("FLAPS FULL", "SET", 14),
          ("LANDING GEAR", "UP", 20), ("LANDING GEAR", "DOWN", 21),
-         # the bridge sets the number ; these tell her that she can (no action in the PM)
+         # the bridge sets the number ; these tell the co-pilot that the co-pilot can (no action in the PM)
          ("SET SELECTED HEADING", "AS REQUESTED", 30), ("SET SELECTED SPEED OR MACH", "AS REQUESTED", 31),
          ("SET SELECTED ALTITUDE", "AS REQUESTED", 32), ("SET QNH ON BOTH ALTIMETERS", "AS REQUESTED", 33),
          ("SET TRANSPONDER SQUAWK CODE", "AS REQUESTED", 34),
          # procedures : action wording ("... PROCEDURE / START"). "... / DONE" read like a checklist answer and the
-         # names clash with her own checklists (Cockpit Preparation, After Start...) : she did not press them.
+         # names clash with the co-pilot's own checklists (Cockpit Preparation, After Start...) : the co-pilot did not press them.
          ("PRELIMINARY COCKPIT PREPARATION PROCEDURE", "START", 100), ("COCKPIT PREPARATION PROCEDURE", "START", 101),
          ("BEFORE START PROCEDURE", "START", 102), ("ENGINE START PROCEDURE", "START ENGINES", 103),
          ("ENGINE START PROCEDURE", "SEQUENCE TWO ONE", 104), ("ENGINE START PROCEDURE", "SEQUENCE ONE TWO", 105),

@@ -1,9 +1,9 @@
 # Speedy Copilot A339 edition - SayIntentions.AI bridge.
-# The SayIntentions co-pilot acts on the aircraft through her own checklist items (SpeedyCopilot/si/order) ;
-# our PM validates every action. This bridge only carries what her items cannot :
+# The SayIntentions co-pilot acts on the aircraft through the co-pilot own checklist items (SpeedyCopilot/si/order) ;
+# our PM validates every action. This bridge only carries what the co-pilot's items cannot :
 #   - the pilot's answer to a read back ("Confirm") : SpeedyCopilot/confirm over UDP ;
 #   - the PM's read backs and refusals, said by the SayIntentions co-pilot (SAPI sayAs), since our PM is silent ;
-#   - the numbers for the FCU, QNH and squawk, from the pilot's words to her and from the ATC instructions.
+#   - the numbers for the FCU, QNH and squawk, from the pilot's words to the co-pilot and from the ATC instructions.
 # Started by Speedycopilot_A339_voice.lua, stops when X-Plane closes. Windows PowerShell 5.1.
 #
 #   -Test file   print what each line of a text file would give, then exit (no network)
@@ -44,10 +44,10 @@ $CONFIRM = "^((okay|ok|yes|yeah|yep) )?(confirm|confirmed|affirm|affirmative|cor
 $CONFIRM_START = "^((okay|ok|yes|yeah|yep) )?(confirm|confirmed|affirm|affirmative) "
 $CONFIRM_NOT = " (dont|do not|not|negative|cancel|abort|stop|wait) "
 
-# "<name> procedure" without the word checklist : the bridge starts the procedure itself. Procedures and her own
-# checklists are kept apart by that word : in flight she said "okay" to "approach procedure" and pressed nothing,
-# and opened her After Landing / Parking checklists on "... procedure". Her own press of the item as well is started
-# once (the PM ignores the same procedure again within 15 s). Engine start stays with her items (its read back).
+# "<name> procedure" without the word checklist : the bridge starts the procedure itself. Procedures and the co-pilot's own
+# checklists are kept apart by that word : in flight the co-pilot said "okay" to "approach procedure" and pressed nothing,
+# and opened the co-pilot's After Landing / Parking checklists on "... procedure". The co-pilot's own press of the item as well is started
+# once (the PM ignores the same procedure again within 15 s). Engine start stays with the co-pilot's items (its read back).
 $PROCEDURES = [ordered]@{
     "preliminary" = "preliminary"; "cockpit prep(aration)?" = "cockpit_preparation"; "before start" = "before_start"
     "after start" = "after_start"; "after take ?off" = "after_takeoff"; "after landing" = "after_landing"
@@ -60,7 +60,7 @@ $PROCEDURE_NOT = " (check ?list|checklists|done|complete|completed|finished|engi
 # go around altitude (landing checklist), a briefing or a plan.
 $GO_AROUND_NOT = " (altitude|alt|checklist|brief|briefing|plan|planned|if|in case|expect|expected|published|done|complete|completed|dont|do not|not|negative|cancel|disregard|never mind) "
 
-# engine start ("engine start procedure", "start engines", "sequence two one") : she said "starting the engines now"
+# engine start ("engine start procedure", "start engines", "sequence two one") : the co-pilot said "starting the engines now"
 # and pressed nothing (02.11.2026). The PM asks for the confirmation ; a phrase with only the sequence is one too.
 function Get-EngineStart([string]$t) {
     $s = " $t "
@@ -88,7 +88,7 @@ function Get-Procedure([string]$t) {
     return $null
 }
 
-# Items she pressed wrong in flight : the bridge sends their codes itself (SI|ORDER|n), the PM drops her own press of
+# Items the co-pilot pressed wrong in flight : the bridge sends their codes itself (SI|ORDER|n), the PM drops the co-pilot's own press of
 # the same kind. "flaps one" -> FLAPS TWO, "start APU" -> APU MASTER ON only, "all anti ice off" -> engine anti ice only.
 $FLAPS = @{ "up" = 10; "zero" = 10; "0" = 10; "one" = 11; "1" = 11; "two" = 12; "2" = 12; "three" = 13; "3" = 13; "tree" = 13
             "full" = 14; "four" = 14; "4" = 14 }
@@ -99,11 +99,11 @@ function Get-BridgeOrders([string]$t) {
     $m = [regex]::Match(" $t ", " (flaps|flap|flips|flats|laps|claps|clips|lips) (to |config |conf )?(up|zero|0|one|1|two|2|three|3|tree|full|four|4) ")
     if ($m.Success) { $orders += "ORDER|" + $FLAPS[$m.Groups[3].Value] }
     if ([regex]::IsMatch(" $t ", " (start|starting) (the |our )?(apu|api) | (apu|api) (start|on and start) ")) { $orders += "ORDER|1510" }
-    # gear ("Gear up" : she said "gear coming up" and pressed nothing, 02.11.2026 ; "Girdown")
-    # also her answer "gear coming up"
+    # gear ("Gear up" : the co-pilot said "gear coming up" and pressed nothing, 02.11.2026 ; "Girdown")
+    # also the co-pilot's answer "gear coming up"
     $m = [regex]::Match(" $t ", " (landing )?(gear|gears|gir|girl|year) (is |coming |going )?(up|down) | (girdown|gearup|geardown|girup) ")
     if ($m.Success) { $orders += "ORDER|" + $(if (($m.Groups[4].Value + $m.Groups[5].Value) -match "up") { 20 } else { 21 }) }
-    # nose light ("nose lights off" was heard as "no its lights off", she switched the runway turn off lights) and
+    # nose light ("nose lights off" was heard as "no its lights off", the co-pilot switched the runway turn off lights) and
     # runway turn off lights : "<light> off" or "turn off (the) <light>"
     $nose = "(nose|noes|knows|no its|no is|taxi|takes a)"
     $m = [regex]::Match(" $t ", " $nose lights? (to )?(off|on|taxi|take ?off) | (turn|switch|set) (off|on) (the )?$nose lights? ")
@@ -126,10 +126,10 @@ function Get-BridgeOrders([string]$t) {
 }
 
 #########################################
-# EVERY ITEM SHE KNOWS (si_items.json)  #
+# EVERY ITEM THE CO-PILOT KNOWS (si_items.json)
 #########################################
-# She is unreliable at pressing her items (02.11.2026 : after a SayIntentions update she pressed none at all) : the
-# bridge finds the item in the pilot's words itself and sends its code. Her items stay, so that she answers right.
+# The co-pilot is unreliable at pressing the co-pilot's items (02.11.2026 : after a SayIntentions update the co-pilot pressed none at all) : the
+# bridge finds the item in the pilot's words itself and sends its code. The co-pilot's items stay, so that the co-pilot answers right.
 # The pilot's words and the item names go through the same aliases, then a phrase segment must hold every required
 # word of the item name and its position ("landing lights on", "turn off the seat belts", "TCAS TA RA").
 
@@ -263,14 +263,14 @@ function Get-ItemOrders([string]$t) {
     return $orders
 }
 
-# Her answer, when the pilot's words gave nothing ("Puckflow High" -> she said "Sure, setting pack flow high") :
-# the items in her words, only when she confirms an action ("sure, setting / switching / turning ...") and never
-# when she asks, doubts or reads a checklist line. Switch items only (no procedure, no number).
+# The co-pilot's answer, when the pilot's words gave nothing ("Puckflow High" -> the co-pilot said "Sure, setting pack flow high") :
+# the items in the co-pilot's words, only when the co-pilot confirms an action ("sure, setting / switching / turning ...") and never
+# when the co-pilot asks, doubts or reads a checklist line. Switch items only (no procedure, no number).
 $REPLY_ACTION = " (setting|set|switching|switched|turning|turned|arming|armed|disarming|engaging|engaged|selecting|selected|starting|opening|closing|releasing|pressing|pushing|pulling|coming|going) "
 $REPLY_NOT = " (not|cant|cannot|unable|dont|do not|isnt|wont|say again|clarify|which|what|unclear|sorry|maybe|should i|shall i|want me|do you|did you|let me know|if you) "
 
 function Get-ReplyOrders([string]$reply) {
-    if ($reply -match "\?") { return @() }   # her question, or a checklist line ("Seat belts???")
+    if ($reply -match "\?") { return @() }   # the co-pilot's question, or a checklist line ("Seat belts???")
     $t = " " + (Normalize $reply) + " "
     $agrees = [regex]::IsMatch($t, $REPLY_ACTION) -or [regex]::IsMatch($t, "^ (sure|okay|ok|roger|copy|got it|will do|done|affirm|wilco|right) ")   # "Sure, strobe lights on"
     if (-not $agrees -or [regex]::IsMatch($t, $REPLY_NOT)) { return @() }
@@ -281,7 +281,7 @@ function Get-ReplyOrders([string]$reply) {
 }
 
 # the pilot's phrase gave nothing, but it was not a question, a negation, a checklist answer or chat with ATC words :
-# her answer may be read
+# the co-pilot's answer may be read
 function Test-ReplyWorth([string]$phrase) {
     $t = " " + (Normalize $phrase) + " "
     if ([regex]::IsMatch($t, $NEGATION) -or [regex]::IsMatch($t, $REQUEST)) { return $false }
@@ -324,8 +324,8 @@ function Get-Orders([string]$text) {
 #########################################
 # NUMBERS : FCU, QNH, SQUAWK            #
 #########################################
-# Her checklist items carry a fixed value only : the bridge reads the numbers, in the pilot's words to her
-# ("heading one seven five") and in the ATC instructions (used by the PM only when she handles the radio).
+# The co-pilot's checklist items carry a fixed value only : the bridge reads the numbers, in the pilot's words to the co-pilot
+# ("heading one seven five") and in the ATC instructions (used by the PM only when the co-pilot handles the radio).
 
 $WORDNUM = @{ "zero" = "0"; "oh" = "0"; "one" = "1"; "two" = "2"; "three" = "3"; "tree" = "3"; "four" = "4"; "fower" = "4"
               "five" = "5"; "fife" = "5"; "six" = "6"; "seven" = "7"; "eight" = "8"; "nine" = "9"; "niner" = "9"
@@ -363,7 +363,7 @@ function Get-Values([string]$text, [switch]$Pilot) {
     $values = @()
     $s = Digitize $text
     if ([regex]::IsMatch($s, $NEGATION)) { return $values }
-    # the pilot asks her to request it from ATC ("can you request flight level 350") : a request, not a value to set
+    # the pilot asks the co-pilot to request it from ATC ("can you request flight level 350") : a request, not a value to set
     if ($Pilot -and [regex]::IsMatch($s, $REQUEST)) { return $values }
     # the pilot's questions ; not for ATC ("When ready descend FL290" was skipped as a question)
     if ($Pilot -and [regex]::IsMatch($s, "^ (what|whats|is|are|should|shall|why|how|when|where|do we|did) ")) { return $values }
@@ -417,10 +417,10 @@ if ($Test) {
     foreach ($line in Get-Content $Test) {
         if ($line.Trim() -eq "" -or $line.StartsWith("#")) { continue }
         if ($line.StartsWith("ATC:")) { $found = @(Get-Values $line.Substring(4)) }   # an ATC instruction
-        elseif ($line -match "^PAIR:(.*)=>(.*)$") {   # "PAIR:the pilot's words => her answer"
+        elseif ($line -match "^PAIR:(.*)=>(.*)$") {   # "PAIR:the pilot's words => the co-pilot's answer"
             $pilot = @(Get-Orders $Matches[1]) + @(Get-Values $Matches[1] -Pilot)
             if ($pilot.Count -gt 0) { $found = @("pilot: " + (($pilot | ForEach-Object { Show-Order $_ }) -join " + ")) }
-            elseif (Test-ReplyWorth $Matches[1]) { $found = @(Get-ReplyOrders $Matches[2] | ForEach-Object { "her: " + (Show-Order $_) }) }
+            elseif (Test-ReplyWorth $Matches[1]) { $found = @(Get-ReplyOrders $Matches[2] | ForEach-Object { "copilot: " + (Show-Order $_) }) }
             else { $found = @() }
         }
         else { $found = @(Get-Orders $line | ForEach-Object { Show-Order $_ }) + @(Get-Values $line -Pilot) }
@@ -454,12 +454,12 @@ function Invoke-Sapi($endpoint, $query) {
     return Invoke-RestMethod -Uri ($api + $endpoint + "?" + ($pairs -join "&")) -Headers @{ "X-Developer-Key" = $script:devKey } -TimeoutSec 10
 }
 
-# her answer : logged ; acted on only when the pilot's words gave nothing ($fromHer)
-function Use-Reply([string]$reply, [bool]$fromHer) {
-    $orders = @(if ($fromHer) { Get-ReplyOrders $reply })
+# the co-pilot's answer : logged ; acted on only when the pilot's words gave nothing ($fromCopilot)
+function Use-Reply([string]$reply, [bool]$fromCopilot) {
+    $orders = @(if ($fromCopilot) { Get-ReplyOrders $reply })
     foreach ($o in $orders) { Send-Command $o }
-    if ($orders.Count -gt 0) { Write-Log "  she said '$($reply.Trim())' -> $(($orders | ForEach-Object { Show-Order $_ }) -join ' + ') (from her words)" }
-    else { Write-Log "  she said '$($reply.Trim())'" }
+    if ($orders.Count -gt 0) { Write-Log "  co-pilot said '$($reply.Trim())' -> $(($orders | ForEach-Object { Show-Order $_ }) -join ' + ') (from the co-pilot's words)" }
+    else { Write-Log "  co-pilot said '$($reply.Trim())'" }
 }
 
 function Is-CopilotPhrase($entry) {
@@ -540,10 +540,10 @@ while ($true) {
             $pending = @()
             foreach ($e in ($r.comm_history | Sort-Object { [long]$_.id })) {
                 $id = [long]$e.id
-                # her answer to a phrase already handled : logged when it arrives (at most 30 s), for diagnosis
+                # the co-pilot's answer to a phrase already handled : logged when it arrives (at most 30 s), for diagnosis
                 if ($replyWait.ContainsKey($id)) {
                     $reply = [string]$e.outgoing_message
-                    if ($reply.Trim() -ne "") { Use-Reply $reply $replyWait[$id].fromHer; $replyWait.Remove($id) }
+                    if ($reply.Trim() -ne "") { Use-Reply $reply $replyWait[$id].fromCopilot; $replyWait.Remove($id) }
                     elseif ((Now-Unix) - $replyWait[$id].since -gt 30) { $replyWait.Remove($id) }
                     else { $pending += $id }
                     continue
@@ -551,7 +551,7 @@ while ($true) {
                 if ($seen.ContainsKey($id)) { continue }
                 if (-not (Is-CopilotPhrase $e)) {
                     $seen[$id] = $true
-                    # ATC instructions : the PM sets them only when she handles the radio (siai/copilot)
+                    # ATC instructions : the PM sets them only when the co-pilot handles the radio (siai/copilot)
                     $atc = [string]$e.outgoing_message
                     if ([string]$e.channel -like "COM*" -and $atc.Trim() -ne "" -and [string]$e.station_name -notmatch "atis") {
                         $values = @(Get-Values $atc)
@@ -580,13 +580,13 @@ while ($true) {
                 } else {
                     Write-Log "heard '$($phrase.Trim())'"
                 }
-                # nothing in the pilot's words : her answer may tell what he asked ("Puckflow High")
-                $fromHer = ($found.Count -eq 0) -and (Test-ReplyWorth $phrase)
+                # nothing in the pilot's words : the co-pilot's answer may tell what the pilot asked ("Puckflow High")
+                $fromCopilot = ($found.Count -eq 0) -and (Test-ReplyWorth $phrase)
                 $reply = [string]$e.outgoing_message
-                if ($reply.Trim() -ne "") { Use-Reply $reply $fromHer }
-                else { $replyWait[$id] = @{ since = Now-Unix; fromHer = $fromHer }; $pending += $id }
+                if ($reply.Trim() -ne "") { Use-Reply $reply $fromCopilot }
+                else { $replyWait[$id] = @{ since = Now-Unix; fromCopilot = $fromCopilot }; $pending += $id }
             }
-            # the watermark stays below the entries still waiting for the pilot's words or her answer
+            # the watermark stays below the entries still waiting for the pilot's words or the co-pilot's answer
             $maxId = $watermark
             foreach ($e in $r.comm_history) { if ([long]$e.id -gt $maxId) { $maxId = [long]$e.id } }
             if ($pending.Count -gt 0) { $watermark = ($pending | Measure-Object -Minimum).Minimum - 1 } else { $watermark = $maxId }

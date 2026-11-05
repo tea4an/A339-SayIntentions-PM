@@ -18,7 +18,7 @@ DIST = ROOT / "dist"
 PACKAGE = DIST / "A339-SayIntentions-PM"
 ITEMS = json.loads((ROOT / "docs" / "si_items.json").read_text(encoding="utf-8"))
 
-# her normal A330 checklists : [challenge, response, challenge spoken, response spoken] (spoken forms, or she spells
+# the PM's normal A330 checklists : [challenge, response, challenge spoken, response spoken] (spoken forms, or the PM spells
 # "T.O RWY" letter by letter). Named "... Checklist" so that "<name> procedure" is never taken for a checklist.
 NORMAL = {
     "Cockpit Preparation": [["GEAR PINS AND COVERS", "REMOVED", "Gear pins and covers", "Removed"], ["FUEL QUANTITY", "CHECKED", "Fuel quantity", "Checked"], ["SEAT BELTS", "ON", "Seat belts", "On"], ["ADIRS", "NAV", "Adirs", "Nav"], ["BARO REF", "SET (BOTH)", "Baro reference", "Set, both"]],
@@ -54,7 +54,7 @@ def collection():
         chunk = ITEMS[part:part + PM_CHUNK]
         checklists.append({
             "name": "PM ACTIONS %d" % (part // PM_CHUNK + 1), "category": "abnormal", "full_auto": 0,
-            "notes": "Never run as a checklist: these items tell the co-pilot what she can do in the cockpit.",
+            "notes": "Never run as a checklist: these items tell the PM what it can do in the cockpit.",
             "sort_order": len(checklists) + 1, "admin_disabled": 0,
             "items": [{"checklist_item": i["challenge"], "checklist_item_pronounced": "",
                        "checklist_item_type": "Full Automatic", "accepted_reply": "", "accepted_pos_reply": "",
@@ -65,7 +65,7 @@ def collection():
                                       "validation_low": None, "validation_high": None}]}
                       for k, i in enumerate(chunk, 1)]})
     return {"__export_version": 1, "name": "A339 PM - SayIntentions co-pilot",
-            "notes": "A339 PM %s: her normal A330 checklists and the PM ACTIONS items (cockpit actions)." % VERSION,
+            "notes": "A339 PM %s: the PM's normal A330 checklists and the PM ACTIONS items (cockpit actions)." % VERSION,
             "shared": 0, "admin_disabled": 0, "checklists": checklists}
 
 
@@ -78,11 +78,11 @@ def commands():
         "A339 PM %s - what you can say to the SayIntentions co-pilot (intercom)" % VERSION,
         "=" * 78, "",
         "Say it naturally: 'landing lights on', 'turn off the seat belts', 'strobe on, landing lights off'.",
-        "The bridge finds the item in your words; if it finds nothing, it looks at her answer",
+        "The bridge finds the item in your words; if it finds nothing, it looks at the PM's answer",
         "('Sure, setting pack flow high'). Several orders in one phrase: separate them with a comma or 'and'.",
         "Nothing is done for questions ('are the landing lights on?'), negations ('don't ...'),",
         "requests to ATC ('ask ATC for flight level 350') or checklist answers ('check', 'set').", "",
-        "PROCEDURES  (say the word 'procedure'; the word 'checklist' starts her own checklist instead)",
+        "PROCEDURES  (say the word 'procedure'; the word 'checklist' starts the PM's own checklist instead)",
         "-" * 78,
         "  preliminary cockpit preparation procedure     on ground (batteries, APU BAT, ext power, oxygen, tests)",
         "  cockpit preparation procedure                 on ground (fuel pumps, packs, ADIRS NAV, lights, signs)",
@@ -102,7 +102,7 @@ def commands():
         "  after landing procedure                       flaps 0, spoilers disarm, lights, radar/PWS off, ...",
         "  parking procedure                             engines off + parking brake: beacon off, fuel pumps off ...",
         "  securing the aircraft procedure               ADIRS off, oxygen off, APU off, batteries off",
-        "  She reports '<name> procedure done.' A procedure never sets SEAT BELTS or PED to OFF.", "",
+        "  The PM reports '<name> procedure done.' A procedure never sets SEAT BELTS or PED to OFF.", "",
         "FLAPS, GEAR (one flap step at a time, VFE / S / F speed checks)",
         "-" * 78,
         "  flaps up / zero / one / two / three / full     gear up / gear down", "",
@@ -113,7 +113,7 @@ def commands():
         "  flight level 350 / altitude 5000 [push|pull]   in flight: set and pushed (managed)",
         "  QNH 1013 / altimeter 29.92       baro out of STD          baro standard / set baro STD",
         "  squawk 4721",
-        "  When she handles the radio, ATC instructions (heading, altitude, speed, QNH, squawk) are set too.", "",
+        "  When the PM handles the radio, ATC instructions (heading, altitude, speed, QNH, squawk) are set too.", "",
         "OTHER",
         "-" * 78,
         "  start APU                        the START button 5 s after APU MASTER",
