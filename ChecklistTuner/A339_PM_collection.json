@@ -1,7 +1,7 @@
 {
   "__export_version": 1,
   "name": "A339 PM - SayIntentions co-pilot",
-  "notes": "A339 PM 1.0.1-beta: her normal A330 checklists and the PM ACTIONS items (cockpit actions).",
+  "notes": "A339 PM 1.0.1-beta: the PM's normal A330 checklists and the PM ACTIONS items (cockpit actions).",
   "shared": 0,
   "admin_disabled": 0,
   "checklists": [
@@ -749,7 +749,7 @@
       "name": "PM ACTIONS 1",
       "category": "abnormal",
       "full_auto": 0,
-      "notes": "Never run as a checklist: these items tell the co-pilot what she can do in the cockpit.",
+      "notes": "Never run as a checklist: these items tell the PM what it can do in the cockpit.",
       "sort_order": 12,
       "admin_disabled": 0,
       "items": [
@@ -2439,7 +2439,7 @@
       "name": "PM ACTIONS 2",
       "category": "abnormal",
       "full_auto": 0,
-      "notes": "Never run as a checklist: these items tell the co-pilot what she can do in the cockpit.",
+      "notes": "Never run as a checklist: these items tell the PM what it can do in the cockpit.",
       "sort_order": 13,
       "admin_disabled": 0,
       "items": [
@@ -4129,7 +4129,7 @@
       "name": "PM ACTIONS 3",
       "category": "abnormal",
       "full_auto": 0,
-      "notes": "Never run as a checklist: these items tell the co-pilot what she can do in the cockpit.",
+      "notes": "Never run as a checklist: these items tell the PM what it can do in the cockpit.",
       "sort_order": 14,
       "admin_disabled": 0,
       "items": [
@@ -5819,7 +5819,7 @@
       "name": "PM ACTIONS 4",
       "category": "abnormal",
       "full_auto": 0,
-      "notes": "Never run as a checklist: these items tell the co-pilot what she can do in the cockpit.",
+      "notes": "Never run as a checklist: these items tell the PM what it can do in the cockpit.",
       "sort_order": 15,
       "admin_disabled": 0,
       "items": [
@@ -7509,7 +7509,7 @@
       "name": "PM ACTIONS 5",
       "category": "abnormal",
       "full_auto": 0,
-      "notes": "Never run as a checklist: these items tell the co-pilot what she can do in the cockpit.",
+      "notes": "Never run as a checklist: these items tell the PM what it can do in the cockpit.",
       "sort_order": 16,
       "admin_disabled": 0,
       "items": [

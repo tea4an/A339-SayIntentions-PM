@@ -1,4 +1,4 @@
-# Bridge phrase tests : the pilot's words (or 'ATC:<instruction>', 'PAIR:<pilot words> => <her answer>')
+# Bridge phrase tests : the pilot's words (or 'ATC:<instruction>', 'PAIR:<pilot words> => <the co-pilot's answer>')
 # <TAB> what the bridge must find ('-' = nothing). Run: powershell -File tests\run_tests.ps1
 # Every line comes from a real flight or a case seen while building the bridge. Add a line for each new fix.
 Approach procedure.	proc/approach
@@ -285,7 +285,7 @@ PAIR:Engine and tires on => Do you mean the engines and tires are on? I'm not su
 PAIR:Search standard Q&A => I'm not sure what you mean by "Search standard Q&A." Could you clarify what you're looking for	-
 PAIR:Set borrow standard => Sure, setting the barometers to standard	pilot: BAROMETERS STANDARD
 PAIR:Gear up => Gear coming up	pilot: LANDING GEAR UP
-PAIR:Gir op => Gear coming up	her: LANDING GEAR UP
+PAIR:Gir op => Gear coming up	copilot: LANDING GEAR UP
 PAIR:Check => Seat belts???	-
 PAIR:Set => Takeoff speeds and thrust???	-
 PAIR:Landing checklist => Landing Checklist  <break time="1.5s" />	-
@@ -298,14 +298,14 @@ PAIR:Traffic Insight, Speedbird 123 => Traffic's ten o'clock, four miles, at fou
 PAIR:Speedbird 123, uh, mayday, mayday, mayday, minimum fuel on board => Mayday declared. I'm transmitting it to Departure now	-
 PAIR:Sit belts on, => Seat belts on, Captain	pilot: SEAT BELT SIGNS ON
 PAIR:Linden lights Owen => Sure, switching the landing lights on	pilot: LANDING LIGHTS ON
-PAIR:Lanting lice off => Sure, turning the landing lights off	her: LANDING LIGHTS OFF
-PAIR:Turn on the strove => Sure, strobe lights on	her: STROBE LIGHTS ON
+PAIR:Lanting lice off => Sure, turning the landing lights off	copilot: LANDING LIGHTS OFF
+PAIR:Turn on the strove => Sure, strobe lights on	copilot: STROBE LIGHTS ON
 PAIR:Wing light => Do you want the wing lights on or off?	-
-PAIR:Puck one of => Sure, switching pack one off	her: PACK 1 OFF
-PAIR:Engine anti ice of => Sure, engine anti-ice off	her: ENGINE ANTI ICE OFF
+PAIR:Puck one of => Sure, switching pack one off	copilot: PACK 1 OFF
+PAIR:Engine anti ice of => Sure, engine anti-ice off	copilot: ENGINE ANTI ICE OFF
 PAIR:Go around => Go-around. Set go-around thrust and follow the published missed approach; I'll advise Tower	pilot: proc/go_around
 PAIR:Start API => I'm not sure what you mean by "Start API	pilot: APU START
-PAIR:Taxi light of => Sure, switching the taxi light off	her: NOSE LIGHT OFF
+PAIR:Taxi light of => Sure, switching the taxi light off	copilot: NOSE LIGHT OFF
 PAIR:Autopilot off => Sure, I'll disconnect the autopilot	-
 Puckflow High	PACK FLOW HIGH
 Set backflow high	PACK FLOW HIGH
@@ -315,7 +315,7 @@ PACK one OFF.	PACK 1 OFF
 Packs on	PACKS ON
 Pakflow Auto	PACK FLOW NORMAL
 PAIR:Pakflow Auto => Sure, setting pack flow to auto	pilot: PACK FLOW NORMAL
-PAIR:Pekflo otto => Sure, setting pack flow to auto	her: PACK FLOW NORMAL
+PAIR:Pekflo otto => Sure, setting pack flow to auto	copilot: PACK FLOW NORMAL
 Engine mode auto	ENGINE MODE NORMAL
 Seat belts auto	SEAT BELT SIGNS AUTO
 Strobe auto	STROBE LIGHTS AUTO

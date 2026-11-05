@@ -62,7 +62,7 @@ function PM_run_process()
 	local step = r.steps[r.index]
 	if step == nil then
 		PM_log(r.name .. " done")
-		-- she reports it ("Cockpit preparation procedure done."), in lower case so that it is not spelled out
+		-- the co-pilot reports it ("Cockpit preparation procedure done."), in lower case so that it is not spelled out
 		local name = string.lower(r.name)
 		PM_say(string.upper(string.sub(name, 1, 1)) .. string.sub(name, 2) .. " procedure done.")
 		PM_RUN = nil
@@ -78,15 +78,15 @@ function PM_run_process()
 end
 do_every_frame("PM_run_process()")
 
--- The bridge starts a procedure from the pilot's words ("approach procedure") and she may press its item too :
--- the same procedure asked again within 15 s is started once. Engine start keeps her repeat (= confirmation) ;
+-- The bridge starts a procedure from the pilot's words ("approach procedure") and the co-pilot may press its item too :
+-- the same procedure asked again within 15 s is started once. Engine start keeps the co-pilot's repeat (= confirmation) ;
 -- repeat = true (always allowed) or the number of seconds a repeat is ignored.
 local PROC_REPEAT = 15
 local proc_asked = {}
 
 local function proc(code, id, name, start, repeat_allowed)
 	local window = type(repeat_allowed) == "number" and repeat_allowed or PROC_REPEAT
-	-- source : "bridge" (the command, from the pilot's words) or "her" (her checklist item, order code)
+	-- source : "bridge" (the command, from the pilot's words) or "copilot" (the co-pilot's checklist item, order code)
 	local function ask(source)
 		local last = proc_asked[id]
 		if repeat_allowed ~= true and last ~= nil and PM_time - last < window then PM_log(name .. " asked again : already started") return end
@@ -95,7 +95,7 @@ local function proc(code, id, name, start, repeat_allowed)
 	end
 	create_command("SpeedyCopilot/proc/" .. id, "A339 PM : " .. name, "PM_proc_" .. id .. "()", "", "")
 	_G["PM_proc_" .. id] = ask
-	PM_register_code(code, function() ask("her") end)
+	PM_register_code(code, function() ask("copilot") end)
 end
 
 --########################################
@@ -250,7 +250,7 @@ proc(118, "go_around", "GO AROUND", function()
 	if not PM_airborne() then PM_refuse("GO AROUND", "In flight only.") return end
 	if PM_agl_m() > GO_AROUND_MAX_AGL_M then PM_refuse("GO AROUND", "Above two thousand five hundred feet above ground. Your go around.") return end
 	set_was_airborne(true)
-	PM_bridge_mark() -- her FLAPS / GEAR item pressed on the same words is dropped
+	PM_bridge_mark() -- the co-pilot's FLAPS / GEAR item pressed on the same words is dropped
 	run("GO AROUND", {
 		function() -- one step up, without the S / F speed checks of a normal retraction
 			local detent = math.floor(get("sim/flightmodel/controls/flaprqst") * 4 + 0.5)
@@ -337,22 +337,22 @@ do_every_frame("PM_engine_start_process()")
 
 local pending_sequence = nil -- a sequence said in the confirmation ("confirm, sequence one two")
 
--- The bridge starts it from the pilot's words ("engine start procedure", 02.11.2026 : she said "starting the engines"
--- and pressed nothing) ; she may press the item too. While the question waits :
+-- The bridge starts it from the pilot's words ("engine start procedure", 02.11.2026 : the co-pilot said "starting the engines"
+-- and pressed nothing) ; the co-pilot may press the item too. While the question waits :
 --   - the bridge again ("confirm, sequence two one") : the pilot's confirmation, with that sequence ;
---   - her press within 10 s of the question : the same pilot phrase, ignored (it must never confirm by itself) ;
---   - her press later : the pilot's "confirm engine start ..." she took for an order, his confirmation.
+--   - the co-pilot's press within 10 s of the question : the same pilot phrase, ignored (it must never confirm by itself) ;
+--   - the co-pilot's press later : the pilot's "confirm engine start ..." taken for an order : the pilot's confirmation.
 local function engine_start(first, second, source)
 	local label = "ENGINE START"
 	if PM_pending_confirm ~= nil and PM_pending_confirm.label == label then
 		local asked = PM_pending_confirm.expires - 45
-		if source == "her" and PM_time - asked < 10 then PM_log(label .. " : her item, the question is already asked") return end
+		if source == "copilot" and PM_time - asked < 10 then PM_log(label .. " : the co-pilot's item, the question is already asked") return end
 		if first ~= nil then pending_sequence = { first, second } end
 		PM_confirm()
 		return
 	end
 	if PM_ES.state ~= "idle" then
-		-- her press of the item right after the pilot's "confirm sequence two one" : the start already runs
+		-- the co-pilot's press of the item right after the pilot's "confirm sequence two one" : the start already runs
 		if PM_time - PM_ES.since < 20 then PM_log(label .. " asked again : already running") return end
 		PM_refuse(label, "Engine start already in progress.")
 		return

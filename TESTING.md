@@ -7,7 +7,7 @@ Four levels, from cheap to real. A release is published only when 1–3 pass; 4 
 `powershell -File tests/run_tests.ps1` — no X-Plane needed:
 
 - **bridge phrases** (`tests/bridge_phrases.tsv`): 300+ phrases from real flights — commands, speech recognition
-  slips, ATC instructions, her answers, questions, negations, checklist answers — each with the action the bridge
+  slips, ATC instructions, the PM's answers, questions, negations, checklist answers — each with the action the bridge
   must find (or none);
 - **consistency**: every item's order code exists in the Lua with the same position, every procedure the bridge can
   start exists, the bridge only sends known codes;
@@ -47,7 +47,7 @@ One short flight, saying each line of this list once on the intercom and compari
 |---|---|---|
 | Cold & dark | preliminary cockpit preparation procedure | batteries, APU BAT, ext power, oxygen … *procedure done* |
 | | cockpit preparation procedure | fuel pumps, packs, ADIRS NAV, seat belts ON … |
-| | cockpit preparation checklist | **her** checklist starts (no procedure) |
+| | cockpit preparation checklist | **the PM's own** checklist starts (no procedure) |
 | | start APU / APU bleed on | START 5 s after MASTER; bleed waits for AVAIL |
 | | squawk 4721 / QNH 1013 / heading 175 | XPDR digits, both baros, FCU HDG (not pulled on ground) |
 | | before start procedure | door, APU bleed, seat belts ON, XPDR, beacon |
@@ -57,9 +57,9 @@ One short flight, saying each line of this list once on the intercom and compari
 | Line up | line up procedure | packs off, TCAS TA RA, lights |
 | Climb | gear up, after takeoff procedure, flaps up, climb procedure | seat belts AUTO, packs on |
 | | flight level 220 and push / speed 250 | managed altitude / selected speed |
-| Cruise | pack flow high; something said unclearly | the bridge or her answer (`from her words`) |
+| Cruise | pack flow high; something said unclearly | the bridge or the PM's answer (`from the co-pilot's words` in the bridge log) |
 | Descent | descent preparation procedure, descent procedure, approach procedure | seat belts ON, spoilers ARM |
-| Approach | flaps one … full, gear down | VFE / 250 kt refusals when too fast, said by her |
+| Approach | flaps one … full, gear down | VFE / 250 kt refusals when too fast, said by the PM |
 | | go around (below 2500 ft AGL) | flaps one step up, gear up at positive climb |
 | Ground | after landing procedure, parking procedure, securing the aircraft procedure | flaps 0, … |
 
