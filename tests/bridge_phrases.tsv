@@ -324,3 +324,15 @@ The scent procedure	proc/descent
 Decent procedure	proc/descent
 Engine start abort	proc/engine_start_abort
 Stop the start	proc/engine_start_abort
+ATC:Turn left heading 110	HDG|110
+ATC:Climb FL360	ALT|36000
+ATC:Descend and maintain 3,000	ALT|3000
+ATC:Reduce speed 210	SPD|210
+ATC:Maintain mach .78	MACH|0.78
+ATC:Maintain mach point seven eight	MACH|0.78
+ATC:Maintain mach 0.78	MACH|0.78
+ATC:Altimeter 30.24	QNH|30.24
+ATC:QNH 1012	QNH|1012
+ATC:Squawk 5711	SQUAWK|5711
+ATC:Turn left heading 110, descend and maintain 3,000, altimeter 30.24, squawk 5711	HDG|110 + ALT|3000 + QNH|30.24 + SQUAWK|5711
+Request flight level 370	-

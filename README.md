@@ -9,8 +9,10 @@ You talk to her on the intercom like to a real PM — *"landing lights on"*, *"f
 - **16 procedures** (flows) from preliminary cockpit preparation to securing the aircraft, including a full
   **engine start** (with a read back) and a **go around**. She reports *"Taxi procedure done."*
 - **Flaps and gear** on the PF's order only, one flap step at a time, with VFE / S / F speed and positive climb checks.
-- **FCU numbers**: heading, speed / mach, altitude, QNH, squawk — from your words, and from ATC instructions when she
-  handles the radio.
+- **FCU numbers** by voice: heading, speed / mach, altitude, QNH, squawk.
+- **When she handles the radio, she flies the clearances too**: *"Turn left heading 110, descend and maintain 3,000,
+  altimeter 30.24, squawk 5711"* — the FCU, both altimeters and the transponder are set as ATC says, without a word
+  from you (see [ATC instructions](#atc-instructions-when-she-handles-the-radio)).
 - **She refuses with a reason**, in her own voice: *"Unable. Speed above V F E, 196 knots."*
 - Speech recognition slips are understood (*"Linden Lights Owen"*, *"Puckflow High"*, *"flat level 220"*), and when
   your words are unclear but her answer is right (*"Sure, setting pack flow high"*), her answer is used.
@@ -71,7 +73,23 @@ Hold the **intercom** PTT and speak to her. See **[COMMANDS.txt](COMMANDS.txt)**
 - **Go around** (*"go around"*, *"missed approach"*) below 2500 ft AGL: flaps one step up, gear up at positive climb,
   after takeoff items.
 - **FCU**: heading and speed are set and pulled, altitude set and pushed in flight; say *push* / *pull* to choose.
-  ATC instructions are applied only when she handles the radio.
+
+### ATC instructions when she handles the radio
+
+When the SayIntentions co-pilot is in charge of the radio (you handed her the communications), the bridge reads
+every ATC transmission and the PM sets what the controller assigns — the way a PM sets the clearance while the PF
+flies:
+
+| ATC says | The PM sets |
+|---|---|
+| *turn left heading 110* | FCU heading 110, pulled (selected) in flight |
+| *climb FL360*, *descend and maintain 3,000* | FCU altitude, pushed (managed) in flight |
+| *reduce speed 210*, *mach .78* | FCU speed / mach, pulled |
+| *altimeter 30.24*, *QNH 1012* | both altimeters — left on STD if they are on STD (above the transition) |
+| *squawk 5711* | the transponder code |
+
+When **you** handle the radio, ATC instructions are only logged, never set: tell her (*"heading 110"*) or set them
+yourself. Asking her to *request* something (*"request flight level 370"*) sets nothing until ATC clears it.
 
 ### Things it will never touch
 

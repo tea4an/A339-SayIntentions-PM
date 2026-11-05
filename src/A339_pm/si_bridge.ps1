@@ -339,6 +339,7 @@ function Digitize([string]$text) {
     $t = [regex]::Replace($t, "\bfl(\d)", 'fl $1')           # ATC writes "Climb FL360"
     $t = [regex]::Replace($t, "(\d),(\d{3})", '$1$2')        # 5,000
     $t = [regex]::Replace($t, "(\d)\.(\d)", '$1#$2')          # keep 29.92 together
+    $t = [regex]::Replace($t, "mach\s*\.(\d)", 'mach 0#$1')   # ATC writes "mach .78"
     $t = $t -replace "[^a-z0-9# ]", " "
     $out = New-Object System.Collections.ArrayList
     foreach ($w in ($t -split "\s+" | Where-Object { $_ -ne "" })) {

@@ -40,7 +40,13 @@ FCU, ALTIMETERS, TRANSPONDER (numbers)
   flight level 350 / altitude 5000 [push|pull]   in flight: set and pushed (managed)
   QNH 1013 / altimeter 29.92       baro out of STD          baro standard / set baro STD
   squawk 4721
-  When she handles the radio, ATC instructions (heading, altitude, speed, QNH, squawk) are set too.
+
+ATC INSTRUCTIONS  (only when SHE handles the radio)
+------------------------------------------------------------------------------
+  Nothing to say: what ATC assigns is set by itself - heading (pulled), altitude / FL (pushed),
+  speed / mach, QNH / altimeter (left on STD above the transition), squawk.
+  When YOU handle the radio, ATC instructions are not set: tell her ('heading 110') or set them.
+  'Request flight level 370' (to her, for ATC) sets nothing until ATC clears it.
 
 OTHER
 ------------------------------------------------------------------------------
