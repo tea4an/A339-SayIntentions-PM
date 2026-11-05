@@ -41,7 +41,8 @@ correctly. The actions themselves are done by the bridge and the PM — they don
 
 ## Installation
 
-1. **Scripts.** Copy the content of `FlyWithLua/Scripts/` into
+1. **Scripts.** Before extracting the zip: right-click it › *Properties* › tick **Unblock** › OK (Windows marks
+   downloaded scripts and may block the hidden bridge). Copy the content of `FlyWithLua/Scripts/` into
    `X-Plane 12/Resources/plugins/FlyWithLua/Scripts/` — three `A339_pm_*.lua` files and the `A339_pm` folder.
 
 2. **Developer key.** Sign in to the SayIntentions.AI pilot portal, open the **Developer Key** page and request a

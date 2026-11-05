@@ -53,6 +53,12 @@ named = set(re.findall(r'= "(\w+)"', table)) | {"engine_start", "engine_start_21
                                                    "engine_start_abort", "go_around"}
 for p in sorted(named):
     check(p in proc_ids.values(), "bridge starts proc/%s : no such procedure" % p)
+# ... and only sends order codes that exist ("ORDER|1510", the flaps table, "{ 1930 }" in the light choices)
+sent = set(int(c) for c in re.findall(r'ORDER\|(\d+)', bridge))
+sent |= set(int(c) for c in re.findall(r'"\w+" = (\d+)', re.search(r'\$FLAPS = @\{(.*?)\}', bridge, re.S).group(1)))
+sent |= set(int(c) for c in re.findall(r'\{ (\d{2,4}) \}', bridge))
+for c in sorted(sent):
+    check(c in codes, "bridge sends ORDER|%d : no such item" % c)
 
 # the Checklist Tuner collection : its importer's rules (app.js confirmImportJson), what SayIntentions accepts
 col = make_release.collection()
