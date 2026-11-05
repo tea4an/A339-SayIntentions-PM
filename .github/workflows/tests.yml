@@ -9,7 +9,7 @@ jobs:
     # the bridge is a Windows PowerShell 5.1 script : test it there
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Build the release
         run: python tools/make_release.py ci
       - name: Bridge phrases, items, collection, archive
@@ -20,7 +20,7 @@ jobs:
     # FlyWithLua runs LuaJIT (Lua 5.1 syntax)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install Lua 5.1
         run: sudo apt-get update && sudo apt-get install -y lua5.1
       - name: luac -p
