@@ -14,6 +14,8 @@ You talk to your PM on the intercom like to a real one — *"landing lights on"*
   altimeter 30.24, squawk 5711"* — the FCU, both altimeters and the transponder are set as ATC says, without a word
   from you (see [ATC instructions](#atc-instructions-when-the-pm-handles-the-radio)).
 - **The PM refuses with a reason**, in its own voice: *"Unable. Speed above V F E, 196 knots."*
+- **Checklists with real answers**: the PM's normal A330 checklists accept the FCOM answers — *"21.8 tonnes"*,
+  *"one plus F"*, *"0.8 up"*, *"1013 set both"*, *"850 set"* — not only *"check"*.
 - Speech recognition slips are understood (*"Linden Lights Owen"*, *"Puckflow High"*, *"flat level 220"*), and when
   your words are unclear but the PM's answer is right (*"Sure, setting pack flow high"*), the PM's answer is used.
 - Nothing on screen, no sounds of its own: SayIntentions does all the talking.
@@ -54,7 +56,7 @@ The actions themselves are done by the bridge and the A339 PM scripts — they d
 3. **Checklist Tuner.** Open <https://checklists.sayintentions.ai>, sign in, select (or add) your **A339** aircraft,
    click **Import JSON** and pick `ChecklistTuner/A339_PM_collection.json`. On the new collection click
    **Not Activated** so that it becomes **Activated** (the collection SayIntentions uses for the A339), then save.
-   It contains the PM's normal A330 checklists (with spoken forms) and the *PM ACTIONS 1–5* lists — never run those as
+   It contains the PM's normal A330 checklists (spoken forms and the accepted answers) and the *PM ACTIONS 1–5* lists — never run those as
    checklists, they only teach the PM the cockpit.
 
 4. **New Flight.** SayIntentions loads checklists only when a flight starts: press **New Flight** in the

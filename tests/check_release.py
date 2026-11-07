@@ -74,6 +74,11 @@ for cl in col["checklists"]:
         check(it["checklist_item_type"] in ("Basic CR", "No CR", "Advanced CR", "Full Automatic"), "bad item type")
         check(it["speak_response"] in (-1, 0, 1), "bad speak_response")
         check(0 < len(it["checklist_item"]) <= 512 and len(it["response_visual_only"]) <= 256, "item text length")
+        # the importer cuts the reply lists at 256 characters
+        check(len(it["accepted_pos_reply"]) <= 256 and len(it["accepted_neg_reply"]) <= 256,
+              "%s %s: accepted replies over 256 characters" % (cl["name"], it["checklist_item"]))
+        if it["checklist_item_type"] == "Advanced CR":
+            check(it["accepted_pos_reply"].strip() != "", "%s %s: Advanced CR without accepted replies" % (cl["name"], it["checklist_item"]))
         check(not re.search(r"[<>]", it["checklist_item"] + it["response_visual_only"]), "markup in an item")
         for v in it["variables"]:
             check(v["variable_name"] == "SpeedyCopilot/si/order" and v["variable_category"] == "DREF"

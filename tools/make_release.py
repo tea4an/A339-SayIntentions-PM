@@ -18,21 +18,65 @@ DIST = ROOT / "dist"
 PACKAGE = DIST / "A339-SayIntentions-PM"
 ITEMS = json.loads((ROOT / "docs" / "si_items.json").read_text(encoding="utf-8"))
 
-# the PM's normal A330 checklists : [challenge, response, challenge spoken, response spoken] (spoken forms, or the PM spells
-# "T.O RWY" letter by letter). Named "... Checklist" so that "<name> procedure" is never taken for a checklist.
+# the PM's normal A330 checklists : [challenge, response shown, challenge spoken, response spoken, accepted answers].
+# Spoken forms, or the PM spells "T.O RWY" letter by letter. Named "... Checklist" so that "<name> procedure" is never
+# taken for a checklist. "Advanced CR" : the PM goes on only on one of the accepted answers (a value where the FCOM
+# expects one : "21.8 tonnes", "one plus F", "0.8 up") and waits on NEGATIVE. With "Basic CR / Any Positive" a value
+# was not taken for an answer ("let me know when it's set").
+ON, OFF = "on|check", "off|check"
 NORMAL = {
-    "Cockpit Preparation": [["GEAR PINS AND COVERS", "REMOVED", "Gear pins and covers", "Removed"], ["FUEL QUANTITY", "CHECKED", "Fuel quantity", "Checked"], ["SEAT BELTS", "ON", "Seat belts", "On"], ["ADIRS", "NAV", "Adirs", "Nav"], ["BARO REF", "SET (BOTH)", "Baro reference", "Set, both"]],
-    "Before Start": [["PARKING BRAKE", "SET", "Parking brake", "Set"], ["T.O SPEEDS AND THRUST", "CHECKED (BOTH)", "Takeoff speeds and thrust", "Checked, both"], ["WINDOWS", "CLOSED (BOTH)", "Windows", "Closed, both"], ["BEACON", "ON", "Beacon", "On"]],
-    "After Start": [["ANTI ICE", "AS REQUIRED", "Anti ice", "As required"], ["ECAM STATUS", "CHECKED", "Ecam status", "Checked"], ["PITCH TRIM", "SET", "Pitch trim", "Set"], ["RUDDER TRIM", "NEUTRAL", "Rudder trim", "Neutral"]],
-    "Taxi": [["FLIGHT CONTROLS", "CHECKED (BOTH)", "Flight controls", "Checked, both"], ["FLAPS SETTING", "CONF ___ (BOTH)", "Flaps setting", "Set, both"], ["RADAR AND PRED W/S", "ON AND AUTO", "Weather radar and predictive windshear", "On and auto"], ["ENG MODE SEL", "AS REQUIRED", "Engine mode selector", "As required"], ["ECAM MEMO", "CHECKED", "Ecam memo", "Checked"]],
-    "Lineup": [["T.O RWY", "CONFIRMED (BOTH)", "Takeoff runway", "Confirmed, both"], ["TCAS", "TA OR TA/RA", "Tee cas", "T A, or T A, R A"], ["PACKS 1 AND 2", "AS REQUIRED", "Packs one and two", "As required"]],
-    "Departure Change": [["RWY AND SID", "CONFIRMED", "Runway and sid", "Confirmed"], ["FLAPS SETTING", "CONF ___ (BOTH)", "Flaps setting", "Set, both"], ["T.O SPEEDS AND THRUST", "CHECKED (BOTH)", "Takeoff speeds and thrust", "Checked, both"], ["FCU ALT", "SET", "Selected altitude", "Set"]],
-    "Approach": [["BARO REF", "SET (BOTH)", "Baro reference", "Set, both"], ["SEAT BELTS", "ON", "Seat belts", "On"], ["MINIMUM", "SET", "Minimum", "Set"], ["AUTO BRAKE", "AS REQUIRED", "Autobrake", "As required"], ["ENG MODE SEL", "AS REQUIRED", "Engine mode selector", "As required"]],
-    "Landing": [["GO AROUND ALTITUDE", "SET", "Go around altitude", "Set"], ["CABIN CREW", "ADVISED", "Cabin crew", "Advised"], ["ECAM MEMO", "CHECKED", "Ecam memo", "Checked"]],
-    "After Landing": [["RADAR AND PRED W/S", "OFF", "Weather radar and predictive windshear", "Off"]],
-    "Parking": [["PARK BRAKE OR CHOCKS", "SET", "Parking brake or chocks", "Set"], ["ENGINES", "OFF", "Engines", "Off"], ["WING LIGHTS", "OFF", "Wing lights", "Off"], ["FUEL PUMPS", "OFF", "Fuel pumps", "Off"]],
-    "Securing the Aircraft": [["OXYGEN", "OFF", "Oxygen", "Off"], ["EMER EXIT LT", "OFF", "Emergency exit lights", "Off"], ["EFBs", "OFF", "Tablets", "Off"], ["BATTERIES", "OFF", "Batteries", "Off"]],
+    "Cockpit Preparation": [
+        ["GEAR PINS AND COVERS", "REMOVED", "Gear pins and covers", "Removed", "removed|removed check|check|checked"],
+        ["FUEL QUANTITY", "___ KG", "Fuel quantity", "Checked", "21.8 tonnes|21800 kilograms|21.8 tons|48000 pounds|21 point 8 tonnes|95 tonnes checked|checked|check"],
+        ["SEAT BELTS", "ON", "Seat belts", "On", ON],
+        ["ADIRS", "NAV", "Adirs", "Nav", "nav|navigation|nav check|check"],
+        ["BARO REF", "___ SET (BOTH)", "Baro reference", "Set, both", "1013 set both|QNH 1013 set|29.92 set both|standard set|set both|set|check"]],
+    "Before Start": [
+        ["PARKING BRAKE", "SET", "Parking brake", "Set", "set|on|set check|check"],
+        ["T.O SPEEDS AND THRUST", "V1 VR V2 FLEX ___ (BOTH)", "Takeoff speeds and thrust", "Checked, both", "V1 145 VR 150 V2 155 flex 52|flex 52 checked both|TOGA checked|checked both|checked|check"],
+        ["WINDOWS", "CLOSED (BOTH)", "Windows", "Closed, both", "closed|closed both|check"],
+        ["BEACON", "ON", "Beacon", "On", ON]],
+    "After Start": [
+        # "not required" (none), "engine anti ice on" (engines only), "anti ice on" (engines and wings)
+        ["ANTI ICE", "NOT REQUIRED / ENG / ON", "Anti ice", "As required", "not required|engine anti ice on|anti ice on|engines on|on|off|check"],
+        ["ECAM STATUS", "CHECKED", "Ecam status", "Checked", "checked|normal|no status|check"],
+        ["PITCH TRIM", "___ UP/DN OR ___ % CG", "Pitch trim", "Set", "0.8 up|1.5 down|zero|32 percent CG|32 percent|29.5 percent CG|set|check"],
+        ["RUDDER TRIM", "ZERO", "Rudder trim", "Zero", "zero|0|zero check|neutral|check"]],
+    "Taxi": [
+        ["FLIGHT CONTROLS", "CHECKED (BOTH)", "Flight controls", "Checked, both", "checked|checked both|check"],
+        ["FLAPS SETTING", "CONF ___ (BOTH)", "Flaps setting", "Set, both", "conf one plus F|one plus F|1 plus F|conf two|conf three|flaps one|two|three|set both|check"],
+        ["RADAR AND PRED W/S", "ON AND AUTO", "Weather radar and predictive windshear", "On and auto", "on and auto|on auto|on|check"],
+        ["ENG MODE SEL", "NORM / IGN", "Engine mode selector", "As required", "normal|norm|ignition|ign start|as required|check"],
+        ["ECAM MEMO", "T.O NO BLUE", "Ecam memo", "Takeoff no blue", "takeoff no blue|take off no blue|no blue|checked|check"]],
+    "Lineup": [
+        ["T.O RWY", "___ CONFIRMED (BOTH)", "Takeoff runway", "Confirmed, both", "runway 01 left confirmed|27R confirmed both|01L confirmed|confirmed both|confirmed|check"],
+        ["TCAS", "TA OR TA/RA", "Tee cas", "T A, or T A, R A", "TA RA|TA only|TA|set|check"],
+        ["PACKS 1 AND 2", "ON / OFF", "Packs one and two", "As required", "on|off|packs on|packs off|check"]],
+    "Departure Change": [
+        ["RWY AND SID", "___ CONFIRMED", "Runway and sid", "Confirmed", "runway 01 left LUNI4L confirmed|runway and SID confirmed|confirmed|check"],
+        ["FLAPS SETTING", "CONF ___ (BOTH)", "Flaps setting", "Set, both", "conf one plus F|one plus F|1 plus F|conf two|conf three|flaps one|two|three|set both|check"],
+        ["T.O SPEEDS AND THRUST", "V1 VR V2 FLEX ___ (BOTH)", "Takeoff speeds and thrust", "Checked, both", "V1 145 VR 150 V2 155 flex 52|flex 52 checked both|TOGA checked|checked both|checked|check"],
+        ["FCU ALT", "___ SET", "Selected altitude", "Set", "5000 set|flight level 70 set|7000 feet set|set|check"]],
+    "Approach": [
+        ["BARO REF", "___ SET (BOTH)", "Baro reference", "Set, both", "1012 set both|QNH 1012 set|29.89 set both|set both|set|check"],
+        ["SEAT BELTS", "ON", "Seat belts", "On", ON],
+        ["MINIMUM", "___ SET", "Minimum", "Set", "850 set|minimums 850 set|850 feet set|minimum 250 set|DA 250 set|radio 200 set|set|check"],
+        ["AUTO BRAKE", "LO / MED / MAX", "Autobrake", "As required", "low|medium|max|off|set low|set medium|check"],
+        ["ENG MODE SEL", "NORM / IGN", "Engine mode selector", "As required", "normal|norm|ignition|ign start|as required|check"]],
+    "Landing": [
+        ["GO AROUND ALTITUDE", "___ FT SET", "Go around altitude", "Set", "3000 set|3000 feet set|go around altitude 4000 set|set|check"],
+        ["CABIN CREW", "ADVISED", "Cabin crew", "Advised", "advised|check"],
+        ["ECAM MEMO", "LDG NO BLUE", "Ecam memo", "Landing no blue", "landing no blue|no blue|checked|check"]],
+    "After Landing": [["RADAR AND PRED W/S", "OFF", "Weather radar and predictive windshear", "Off", "off|off and off|check"]],
+    "Parking": [
+        ["PARK BRAKE OR CHOCKS", "SET", "Parking brake or chocks", "Set", "set|chocks in|parking brake set|check"],
+        ["ENGINES", "OFF", "Engines", "Off", OFF], ["WING LIGHTS", "OFF", "Wing lights", "Off", OFF],
+        ["FUEL PUMPS", "OFF", "Fuel pumps", "Off", OFF]],
+    "Securing the Aircraft": [
+        ["OXYGEN", "OFF", "Oxygen", "Off", OFF], ["EMER EXIT LT", "OFF", "Emergency exit lights", "Off", OFF],
+        ["EFBs", "OFF", "Tablets", "Off", OFF], ["BATTERIES", "OFF", "Batteries", "Off", OFF]],
 }
+NEGATIVE = "standby|not yet|wait|negative|hold on"
 NORMAL_NOTES = ("Run this checklist only when the pilot says the word checklist. A request that says procedure is never "
                 "this checklist: it is the PROCEDURE / START item in PM ACTIONS.")
 PM_CHUNK = 70  # one SayIntentions checklist of 290 items never worked; up to ~76 do
@@ -45,11 +89,12 @@ def collection():
         checklists.append({
             "name": name + " Checklist", "category": "normal", "full_auto": 0, "notes": NORMAL_NOTES, "sort_order": n,
             "admin_disabled": 0,
-            "items": [{"checklist_item": c, "checklist_item_pronounced": cp, "checklist_item_type": "Basic CR",
-                       "accepted_reply": "Any Positive", "accepted_pos_reply": "", "accepted_neg_reply": "",
+            "items": [{"checklist_item": c, "checklist_item_pronounced": cp, "checklist_item_type": "Advanced CR",
+                       "accepted_reply": "", "accepted_pos_reply": ok.replace("|", "\n"),
+                       "accepted_neg_reply": NEGATIVE.replace("|", "\n"),
                        "response_visual_only": r, "speak_response": 0, "response_pronounced": rp,
                        "speak_pause_seconds": 0, "sort_order": k, "admin_disabled": 0, "variables": []}
-                      for k, (c, r, cp, rp) in enumerate(rows, 1)]})
+                      for k, (c, r, cp, rp, ok) in enumerate(rows, 1)]})
     for part in range(0, len(ITEMS), PM_CHUNK):
         chunk = ITEMS[part:part + PM_CHUNK]
         checklists.append({
