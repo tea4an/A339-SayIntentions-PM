@@ -1,0 +1,26 @@
+# Bridge phrase tests with the A321 items (A321neo / LR / XLR) : the switches that differ from the A339.
+# <TAB> what the bridge must find ('-' = nothing). Run: powershell -File tests\run_tests.ps1
+Seat belts on	SEAT BELT SIGNS ON
+Seat belts off	SEAT BELT SIGNS OFF
+Seat belts auto	-
+No smoking auto	NO SMOKING SIGNS AUTO
+No smoking on	NO SMOKING SIGNS ON
+No portable devices auto	NO SMOKING SIGNS AUTO
+Econ flow on	ECON FLOW ON
+Econ flow off	ECON FLOW OFF
+Pack flow high	-
+Fuel pump left one off	LEFT FUEL PUMP 1 OFF
+Fuel pumps on	ALL FUEL PUMPS ON
+Fuel pumps off	ALL FUEL PUMPS OFF
+Center tank left transfer off	CENTER TANK LEFT TRANSFER OFF
+Center tank right transfer on	CENTER TANK RIGHT TRANSFER ON
+Main fuel pumps on	MAIN FUEL PUMPS ON
+APU battery on	BATTERIES ON
+External power on	EXTERNAL POWER ON
+External power off	EXTERNAL POWER OFF
+Tail tank transfer on	-
+Landing lights on	LANDING LIGHTS ON
+Flaps one	FLAPS ONE SET
+Taxi procedure	proc/taxi
+Start APU	APU START
+Turn off all anti-ice	ENGINE ANTI ICE OFF + WING ANTI ICE OFF

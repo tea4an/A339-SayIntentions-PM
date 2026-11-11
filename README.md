@@ -1,10 +1,10 @@
-# A339 PM — a SayIntentions.AI co-pilot integration for the ToLiss A330-900
+# A339 PM — a SayIntentions.AI co-pilot integration for the ToLiss A330-900 and A321
 
-Fly the **ToLiss A330-900 (A339)** in **X-Plane 12** with the **SayIntentions.AI co-pilot as your pilot monitoring**.
+Fly the **ToLiss A330-900 (A339)** or the **ToLiss A321 (neo, LR, XLR)** in **X-Plane 12** with the **SayIntentions.AI co-pilot as your pilot monitoring**.
 You talk to your PM on the intercom like to a real one — *"landing lights on"*, *"flaps one"*, *"taxi procedure"*,
 *"heading 175"* — the PM answers, and the A339 PM does it in the cockpit, with the checks a PM would make.
 
-- **275 switch positions on 125 cockpit controls** by voice: lights, signs, fuel, APU, air conditioning, anti-ice, ADIRS, EFIS, ECAM pages,
+- **275 switch positions on 125 cockpit controls** (A339; a few less on the A321) by voice: lights, signs, fuel, APU, air conditioning, anti-ice, ADIRS, EFIS, ECAM pages,
   TCAS / transponder, autobrake, FCU buttons, GPWS … (full list in [COMMANDS.txt](COMMANDS.txt)).
 - **16 procedures** (flows) from preliminary cockpit preparation to securing the aircraft, including a full
   **engine start** (with a read back) and a **go around**. The PM reports *"Taxi procedure done."*
@@ -37,7 +37,8 @@ The actions themselves are done by the bridge and the A339 PM scripts — they d
 
 ## Requirements
 
-- X-Plane 12 and the **ToLiss A330-900** (tested with V1.2.1).
+- X-Plane 12 and the **ToLiss A330-900** (tested with V1.2.1) or the **ToLiss A321** (neo, LR, XLR — tested with
+  the XLR, V1.9.0).
 - **FlyWithLua NG+** for X-Plane 12.
 - **SayIntentions.AI** with the co-pilot.
 - **Windows 10 / 11** (the bridge is a Windows PowerShell 5.1 script).
@@ -54,16 +55,27 @@ The actions themselves are done by the bridge and the A339 PM scripts — they d
    Save the key alone in `Scripts/A339_pm/si_dev_key.txt`. It is yours: never share or publish it.
 
 3. **Checklist Tuner.** Open <https://checklists.sayintentions.ai>, sign in, select (or add) your **A339** aircraft,
-   click **Import JSON** and pick `ChecklistTuner/A339_PM_collection.json`. On the new collection click
-   **Not Activated** so that it becomes **Activated** (the collection SayIntentions uses for the A339), then save.
+   click **Import JSON** and pick `ChecklistTuner/A339_PM_collection.json`. For the A321 select your **A21N**
+   aircraft and pick `ChecklistTuner/A321_PM_collection.json`. On the new collection click
+   **Not Activated** so that it becomes **Activated** (the collection SayIntentions uses for that aircraft), then save.
    It contains the PM's normal A330 checklists (spoken forms and the accepted answers) and the *PM ACTIONS 1–5* lists — never run those as
    checklists, they only teach the PM the cockpit.
 
 4. **New Flight.** SayIntentions loads checklists only when a flight starts: press **New Flight** in the
    SayIntentions client after the import (and after any later change in Checklist Tuner).
 
-5. **Fly.** Load the A339. The bridge starts by itself (hidden) and stops when X-Plane closes. After updating the
+5. **Fly.** Load the A339 or the A321 — the scripts pick the aircraft by themselves and stay off in any other. The bridge starts by itself (hidden) and stops when X-Plane closes. After updating the
    scripts while flying: *Plugins › FlyWithLua › Reload all Lua script files*.
+
+## The A321
+
+The same scripts fly the ToLiss A321neo / LR / XLR (ICAO `A21N`): same procedures, same phrases, its own flap speed
+limits. Its cockpit differs in a few places:
+
+- **SEAT BELTS** is ON / OFF (no AUTO) and the second sign is **NO SMOKING** OFF / AUTO / ON.
+- **ECON FLOW** on / off instead of the pack flow selector.
+- **CENTER TANK LEFT / RIGHT TRANSFER** instead of the center tank pumps; no standby pumps, no tail tank.
+- No **APU BAT**. A procedure step for a switch the A321 does not have is skipped.
 
 ## Using it
 

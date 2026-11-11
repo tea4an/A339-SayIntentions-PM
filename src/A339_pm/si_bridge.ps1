@@ -10,6 +10,7 @@
 #   -DryRun      fetch the comms history once and print what would be done, then exit
 param(
     [int]$Port = 49052,
+    [string]$Aircraft = "A339",   # the PM's PM_TYPE : A339 or A321 (its own PM ACTIONS items)
     [string]$DevKeyFile = "",   # default : si_dev_key.txt next to this script
     [double]$Interval = 1.0,
     [string]$Test,
@@ -133,7 +134,8 @@ function Get-BridgeOrders([string]$t) {
 # The pilot's words and the item names go through the same aliases, then a phrase segment must hold every required
 # word of the item name and its position ("landing lights on", "turn off the seat belts", "TCAS TA RA").
 
-$itemsFile = @((Join-Path $PSScriptRoot "si_items.json"), (Join-Path $PSScriptRoot "..\..\docs\si_items.json")) |
+$itemsName = if ($Aircraft -eq "A339") { "si_items.json" } else { "si_items_$Aircraft.json" }
+$itemsFile = @((Join-Path $PSScriptRoot $itemsName), (Join-Path $PSScriptRoot "..\..\docs\$itemsName")) |
     Where-Object { Test-Path $_ } | Select-Object -First 1
 $ITEMS = @()
 if ($itemsFile) { $ITEMS = @((Get-Content $itemsFile -Raw | ConvertFrom-Json) | ForEach-Object { $_ }) }   # PS 5.1 : unroll the array
@@ -510,7 +512,7 @@ function Flush-SayQueue($key) {
     }
 }
 
-Write-Log "SayIntentions bridge started (UDP $Port)"
+Write-Log "SayIntentions bridge started (UDP $Port, $Aircraft, $($ITEMS.Count) items)"
 $seen = @{}
 $firstSeen = @{}
 $replyWait = @{}

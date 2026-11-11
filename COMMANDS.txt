@@ -1,4 +1,4 @@
-A339 PM 1.0.2-beta - what you can say to the SayIntentions co-pilot (intercom)
+A339 PM 1.1.0-beta - what you can say to the SayIntentions co-pilot (intercom)
 ==============================================================================
 
 Say it naturally: 'landing lights on', 'turn off the seat belts', 'strobe on, landing lights off'.
@@ -28,6 +28,7 @@ PROCEDURES  (say the word 'procedure'; the word 'checklist' starts the PM's own 
   parking procedure                             engines off + parking brake: beacon off, fuel pumps off ...
   securing the aircraft procedure               ADIRS off, oxygen off, APU off, batteries off
   The PM reports '<name> procedure done.' A procedure never sets SEAT BELTS or PED to OFF.
+  A step for a switch the aircraft does not have is skipped (APU BAT, SEAT BELTS AUTO on the A321).
 
 FLAPS, GEAR (one flap step at a time, VFE / S / F speed checks)
 ------------------------------------------------------------------------------
@@ -54,7 +55,7 @@ OTHER
   APU bleed on                     waits for APU AVAIL; refused above FL200 with packs on
   all anti ice on / off            engine and wing anti ice
 
-EVERY SWITCH  (name : positions)   e.g. 'seat belts on', 'TCAS TA RA', 'captain wiper slow'
+EVERY SWITCH, ToLiss A330-900  (name : positions)   e.g. 'seat belts on', 'TCAS TA RA'
 ------------------------------------------------------------------------------
   adirs ir 1                                   off / nav / att
   adirs ir 2                                   off / nav / att
@@ -129,6 +130,125 @@ EVERY SWITCH  (name : positions)   e.g. 'seat belts on', 'TCAS TA RA', 'captain 
   emergency exit lights                        off / arm / on
   seat belt signs                              off / auto / on
   no portable electronic devices               off / auto / on
+  captain wiper                                off / slow / fast
+  first officer wiper                          off / slow / fast
+  wipers                                       off / slow / fast
+  crew oxygen supply                           on / off
+  recorder ground control                      on / off
+  cockpit door                                 open / close
+  flight directors                             on / off
+  barometers                                   standard / qnh
+  baro unit                                    hectopascal / inches
+  terrain on captain nd                        on / off
+  terrain on first officer nd                  on / off
+  constraints on first officer nd              on / off
+  captain nd mode                              ls / vor / nav / arc / plan
+  first officer nd mode                        ls / vor / nav / arc / plan
+  captain nd range                             10 / 20 / 40 / 80 / 160 / 320
+  first officer nd range                       10 / 20 / 40 / 80 / 160 / 320
+  master caution                               reset
+  master warning                               reset
+  ecam emergency cancel                        press
+  ecam recall                                  press
+  ecam clear                                   press
+  takeoff config test                          test
+  ecam page                                    engine / bleed / pressure / elec ac / elec dc / hydraulic / circuit breakers / apu / conditioning / door / wheel / flight controls / fuel / status / all
+  autobrake                                    low / medium / max
+  brake fans                                   on / off
+  parking brake                                set / release
+  ground spoilers                              arm / disarm
+  row rop                                      on / off
+  transponder                                  standby / auto / on
+  tcas                                         standby / ta only / ta ra
+  transponder system                           one / two
+  transponder ident                            press
+  weather radar                                on / off
+  predictive windshear                         auto / off
+  gpws system                                  on / off
+  gpws glideslope mode                         on / off
+  gpws flap mode                               on / off
+  gpws landing flaps 3                         on / off
+  gpws terrain                                 on / off
+  engine mode                                  crank / normal / ignition
+  autopilot 1                                  engage
+  autopilot 2                                  engage
+  autothrust                                   press
+  approach mode                                press
+  localizer mode                               press
+  altitude knob                                push / pull
+  heading knob                                 push / pull
+  speed knob                                   push / pull
+  vertical speed knob                          push / pull
+  heading track button                         press
+  speed mach button                            press
+  metric altitude                              press
+
+EVERY SWITCH, ToLiss A321 (neo, LR, XLR)  (name : positions)   e.g. 'seat belts on', 'TCAS TA RA'
+------------------------------------------------------------------------------
+  adirs ir 1                                   off / nav / att
+  adirs ir 2                                   off / nav / att
+  adirs ir 3                                   off / nav / att
+  all adirs                                    off / nav / att
+  apu fire test                                test
+  engine 1 fire test                           test
+  engine 2 fire test                           test
+  cargo smoke test                             test
+  battery 1                                    on / off
+  battery 2                                    on / off
+  batteries                                    on / off
+  external power                               on / off
+  generator 1                                  on / off
+  generator 2                                  on / off
+  apu generator                                on / off
+  bus tie                                      auto / off
+  ac essential feed                            normal / alternate
+  commercial                                   on / off
+  galley                                       on / off
+  emergency generator test                     test
+  left fuel pump 1                             on / off
+  left fuel pump 2                             on / off
+  right fuel pump 1                            on / off
+  right fuel pump 2                            on / off
+  center tank left transfer                    on / off
+  center tank right transfer                   on / off
+  main fuel pumps                              on / off
+  all fuel pumps                               on / off
+  center tank mode                             auto / manual
+  fuel crossfeed                               open / shut
+  apu master                                   on / off
+  apu                                          start / off
+  apu bleed                                    on / off
+  engine 1 anti ice                            on / off
+  engine 2 anti ice                            on / off
+  engine anti ice                              on / off
+  wing anti ice                                on / off
+  probe and window heat                        on / auto
+  pack 1                                       on / off
+  pack 2                                       on / off
+  packs                                        on / off
+  econ flow                                    on / off
+  engine 1 bleed                               on / off
+  engine 2 bleed                               on / off
+  engine bleeds                                on / off
+  cross bleed                                  shut / auto / open
+  hot air 1                                    on / off
+  hot air 2                                    on / off
+  cabin fans                                   on / off
+  avionics extract                             auto / override
+  landing elevation                            auto
+  cabin pressure mode                          auto / manual
+  beacon                                       on / off
+  wing lights                                  on / off
+  nav and logo lights                          on / off
+  nose light                                   off / taxi / takeoff
+  landing lights                               on / off
+  runway turn off lights                       on / off
+  strobe lights                                off / auto / on
+  dome light                                   off / dim / bright
+  ice indicator and standby compass light      on / off
+  emergency exit lights                        off / arm / on
+  seat belt signs                              off / on
+  no smoking signs                             off / auto / on
   captain wiper                                off / slow / fast
   first officer wiper                          off / slow / fast
   wipers                                       off / slow / fast

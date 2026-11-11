@@ -1,0 +1,1432 @@
+[
+ {
+  "challenge": "FLAPS UP",
+  "response": "SET",
+  "code": 10
+ },
+ {
+  "challenge": "FLAPS ONE",
+  "response": "SET",
+  "code": 11
+ },
+ {
+  "challenge": "FLAPS TWO",
+  "response": "SET",
+  "code": 12
+ },
+ {
+  "challenge": "FLAPS THREE",
+  "response": "SET",
+  "code": 13
+ },
+ {
+  "challenge": "FLAPS FULL",
+  "response": "SET",
+  "code": 14
+ },
+ {
+  "challenge": "LANDING GEAR",
+  "response": "UP",
+  "code": 20
+ },
+ {
+  "challenge": "LANDING GEAR",
+  "response": "DOWN",
+  "code": 21
+ },
+ {
+  "challenge": "SET SELECTED HEADING",
+  "response": "AS REQUESTED",
+  "code": 30
+ },
+ {
+  "challenge": "SET SELECTED SPEED OR MACH",
+  "response": "AS REQUESTED",
+  "code": 31
+ },
+ {
+  "challenge": "SET SELECTED ALTITUDE",
+  "response": "AS REQUESTED",
+  "code": 32
+ },
+ {
+  "challenge": "SET QNH ON BOTH ALTIMETERS",
+  "response": "AS REQUESTED",
+  "code": 33
+ },
+ {
+  "challenge": "SET TRANSPONDER SQUAWK CODE",
+  "response": "AS REQUESTED",
+  "code": 34
+ },
+ {
+  "challenge": "PRELIMINARY COCKPIT PREPARATION PROCEDURE",
+  "response": "START",
+  "code": 100
+ },
+ {
+  "challenge": "COCKPIT PREPARATION PROCEDURE",
+  "response": "START",
+  "code": 101
+ },
+ {
+  "challenge": "BEFORE START PROCEDURE",
+  "response": "START",
+  "code": 102
+ },
+ {
+  "challenge": "ENGINE START PROCEDURE",
+  "response": "START ENGINES",
+  "code": 103
+ },
+ {
+  "challenge": "ENGINE START PROCEDURE",
+  "response": "SEQUENCE TWO ONE",
+  "code": 104
+ },
+ {
+  "challenge": "ENGINE START PROCEDURE",
+  "response": "SEQUENCE ONE TWO",
+  "code": 105
+ },
+ {
+  "challenge": "AFTER START PROCEDURE",
+  "response": "START",
+  "code": 106
+ },
+ {
+  "challenge": "TAXI PROCEDURE",
+  "response": "START",
+  "code": 107
+ },
+ {
+  "challenge": "LINE UP PROCEDURE",
+  "response": "START",
+  "code": 108
+ },
+ {
+  "challenge": "AFTER TAKEOFF PROCEDURE",
+  "response": "START",
+  "code": 109
+ },
+ {
+  "challenge": "CLIMB PROCEDURE",
+  "response": "START",
+  "code": 110
+ },
+ {
+  "challenge": "DESCENT PREPARATION PROCEDURE",
+  "response": "START",
+  "code": 111
+ },
+ {
+  "challenge": "DESCENT PROCEDURE",
+  "response": "START",
+  "code": 112
+ },
+ {
+  "challenge": "APPROACH PROCEDURE",
+  "response": "START",
+  "code": 113
+ },
+ {
+  "challenge": "AFTER LANDING PROCEDURE",
+  "response": "START",
+  "code": 114
+ },
+ {
+  "challenge": "PARKING PROCEDURE",
+  "response": "START",
+  "code": 115
+ },
+ {
+  "challenge": "SECURING THE AIRCRAFT PROCEDURE",
+  "response": "START",
+  "code": 116
+ },
+ {
+  "challenge": "ENGINE START PROCEDURE",
+  "response": "ABORT",
+  "code": 117
+ },
+ {
+  "challenge": "GO AROUND PROCEDURE",
+  "response": "START",
+  "code": 118
+ },
+ {
+  "challenge": "ADIRS IR 1",
+  "response": "OFF",
+  "code": 1000
+ },
+ {
+  "challenge": "ADIRS IR 1",
+  "response": "NAV",
+  "code": 1001
+ },
+ {
+  "challenge": "ADIRS IR 1",
+  "response": "ATT",
+  "code": 1002
+ },
+ {
+  "challenge": "ADIRS IR 2",
+  "response": "OFF",
+  "code": 1010
+ },
+ {
+  "challenge": "ADIRS IR 2",
+  "response": "NAV",
+  "code": 1011
+ },
+ {
+  "challenge": "ADIRS IR 2",
+  "response": "ATT",
+  "code": 1012
+ },
+ {
+  "challenge": "ADIRS IR 3",
+  "response": "OFF",
+  "code": 1020
+ },
+ {
+  "challenge": "ADIRS IR 3",
+  "response": "NAV",
+  "code": 1021
+ },
+ {
+  "challenge": "ADIRS IR 3",
+  "response": "ATT",
+  "code": 1022
+ },
+ {
+  "challenge": "ALL ADIRS",
+  "response": "OFF",
+  "code": 1030
+ },
+ {
+  "challenge": "ALL ADIRS",
+  "response": "NAV",
+  "code": 1031
+ },
+ {
+  "challenge": "ALL ADIRS",
+  "response": "ATT",
+  "code": 1032
+ },
+ {
+  "challenge": "APU FIRE TEST",
+  "response": "TEST",
+  "code": 1040
+ },
+ {
+  "challenge": "ENGINE 1 FIRE TEST",
+  "response": "TEST",
+  "code": 1050
+ },
+ {
+  "challenge": "ENGINE 2 FIRE TEST",
+  "response": "TEST",
+  "code": 1060
+ },
+ {
+  "challenge": "CARGO SMOKE TEST",
+  "response": "TEST",
+  "code": 1070
+ },
+ {
+  "challenge": "BATTERY 1",
+  "response": "ON",
+  "code": 1100
+ },
+ {
+  "challenge": "BATTERY 1",
+  "response": "OFF",
+  "code": 1101
+ },
+ {
+  "challenge": "BATTERY 2",
+  "response": "ON",
+  "code": 1110
+ },
+ {
+  "challenge": "BATTERY 2",
+  "response": "OFF",
+  "code": 1111
+ },
+ {
+  "challenge": "BATTERIES",
+  "response": "ON",
+  "code": 1120
+ },
+ {
+  "challenge": "BATTERIES",
+  "response": "OFF",
+  "code": 1121
+ },
+ {
+  "challenge": "EXTERNAL POWER",
+  "response": "ON",
+  "code": 1140
+ },
+ {
+  "challenge": "EXTERNAL POWER",
+  "response": "OFF",
+  "code": 1141
+ },
+ {
+  "challenge": "GENERATOR 1",
+  "response": "ON",
+  "code": 1150
+ },
+ {
+  "challenge": "GENERATOR 1",
+  "response": "OFF",
+  "code": 1151
+ },
+ {
+  "challenge": "GENERATOR 2",
+  "response": "ON",
+  "code": 1160
+ },
+ {
+  "challenge": "GENERATOR 2",
+  "response": "OFF",
+  "code": 1161
+ },
+ {
+  "challenge": "APU GENERATOR",
+  "response": "ON",
+  "code": 1170
+ },
+ {
+  "challenge": "APU GENERATOR",
+  "response": "OFF",
+  "code": 1171
+ },
+ {
+  "challenge": "BUS TIE",
+  "response": "AUTO",
+  "code": 1180
+ },
+ {
+  "challenge": "BUS TIE",
+  "response": "OFF",
+  "code": 1181
+ },
+ {
+  "challenge": "AC ESSENTIAL FEED",
+  "response": "NORMAL",
+  "code": 1190
+ },
+ {
+  "challenge": "AC ESSENTIAL FEED",
+  "response": "ALTERNATE",
+  "code": 1191
+ },
+ {
+  "challenge": "COMMERCIAL",
+  "response": "ON",
+  "code": 1200
+ },
+ {
+  "challenge": "COMMERCIAL",
+  "response": "OFF",
+  "code": 1201
+ },
+ {
+  "challenge": "GALLEY",
+  "response": "ON",
+  "code": 1210
+ },
+ {
+  "challenge": "GALLEY",
+  "response": "OFF",
+  "code": 1211
+ },
+ {
+  "challenge": "EMERGENCY GENERATOR TEST",
+  "response": "TEST",
+  "code": 1220
+ },
+ {
+  "challenge": "LEFT FUEL PUMP 1",
+  "response": "ON",
+  "code": 1300
+ },
+ {
+  "challenge": "LEFT FUEL PUMP 1",
+  "response": "OFF",
+  "code": 1301
+ },
+ {
+  "challenge": "LEFT FUEL PUMP 2",
+  "response": "ON",
+  "code": 1310
+ },
+ {
+  "challenge": "LEFT FUEL PUMP 2",
+  "response": "OFF",
+  "code": 1311
+ },
+ {
+  "challenge": "RIGHT FUEL PUMP 1",
+  "response": "ON",
+  "code": 1320
+ },
+ {
+  "challenge": "RIGHT FUEL PUMP 1",
+  "response": "OFF",
+  "code": 1321
+ },
+ {
+  "challenge": "RIGHT FUEL PUMP 2",
+  "response": "ON",
+  "code": 1330
+ },
+ {
+  "challenge": "RIGHT FUEL PUMP 2",
+  "response": "OFF",
+  "code": 1331
+ },
+ {
+  "challenge": "CENTER TANK LEFT TRANSFER",
+  "response": "ON",
+  "code": 1340
+ },
+ {
+  "challenge": "CENTER TANK LEFT TRANSFER",
+  "response": "OFF",
+  "code": 1341
+ },
+ {
+  "challenge": "CENTER TANK RIGHT TRANSFER",
+  "response": "ON",
+  "code": 1350
+ },
+ {
+  "challenge": "CENTER TANK RIGHT TRANSFER",
+  "response": "OFF",
+  "code": 1351
+ },
+ {
+  "challenge": "MAIN FUEL PUMPS",
+  "response": "ON",
+  "code": 1380
+ },
+ {
+  "challenge": "MAIN FUEL PUMPS",
+  "response": "OFF",
+  "code": 1381
+ },
+ {
+  "challenge": "ALL FUEL PUMPS",
+  "response": "ON",
+  "code": 1400
+ },
+ {
+  "challenge": "ALL FUEL PUMPS",
+  "response": "OFF",
+  "code": 1401
+ },
+ {
+  "challenge": "CENTER TANK MODE",
+  "response": "AUTO",
+  "code": 1410
+ },
+ {
+  "challenge": "CENTER TANK MODE",
+  "response": "MANUAL",
+  "code": 1411
+ },
+ {
+  "challenge": "FUEL CROSSFEED",
+  "response": "OPEN",
+  "code": 1420
+ },
+ {
+  "challenge": "FUEL CROSSFEED",
+  "response": "SHUT",
+  "code": 1421
+ },
+ {
+  "challenge": "APU MASTER",
+  "response": "ON",
+  "code": 1500
+ },
+ {
+  "challenge": "APU MASTER",
+  "response": "OFF",
+  "code": 1501
+ },
+ {
+  "challenge": "APU",
+  "response": "START",
+  "code": 1510
+ },
+ {
+  "challenge": "APU",
+  "response": "OFF",
+  "code": 1511
+ },
+ {
+  "challenge": "APU BLEED",
+  "response": "ON",
+  "code": 1520
+ },
+ {
+  "challenge": "APU BLEED",
+  "response": "OFF",
+  "code": 1521
+ },
+ {
+  "challenge": "ENGINE 1 ANTI ICE",
+  "response": "ON",
+  "code": 1600
+ },
+ {
+  "challenge": "ENGINE 1 ANTI ICE",
+  "response": "OFF",
+  "code": 1601
+ },
+ {
+  "challenge": "ENGINE 2 ANTI ICE",
+  "response": "ON",
+  "code": 1610
+ },
+ {
+  "challenge": "ENGINE 2 ANTI ICE",
+  "response": "OFF",
+  "code": 1611
+ },
+ {
+  "challenge": "ENGINE ANTI ICE",
+  "response": "ON",
+  "code": 1620
+ },
+ {
+  "challenge": "ENGINE ANTI ICE",
+  "response": "OFF",
+  "code": 1621
+ },
+ {
+  "challenge": "WING ANTI ICE",
+  "response": "ON",
+  "code": 1630
+ },
+ {
+  "challenge": "WING ANTI ICE",
+  "response": "OFF",
+  "code": 1631
+ },
+ {
+  "challenge": "PROBE AND WINDOW HEAT",
+  "response": "ON",
+  "code": 1640
+ },
+ {
+  "challenge": "PROBE AND WINDOW HEAT",
+  "response": "AUTO",
+  "code": 1641
+ },
+ {
+  "challenge": "PACK 1",
+  "response": "ON",
+  "code": 1700
+ },
+ {
+  "challenge": "PACK 1",
+  "response": "OFF",
+  "code": 1701
+ },
+ {
+  "challenge": "PACK 2",
+  "response": "ON",
+  "code": 1710
+ },
+ {
+  "challenge": "PACK 2",
+  "response": "OFF",
+  "code": 1711
+ },
+ {
+  "challenge": "PACKS",
+  "response": "ON",
+  "code": 1720
+ },
+ {
+  "challenge": "PACKS",
+  "response": "OFF",
+  "code": 1721
+ },
+ {
+  "challenge": "ECON FLOW",
+  "response": "ON",
+  "code": 1870
+ },
+ {
+  "challenge": "ECON FLOW",
+  "response": "OFF",
+  "code": 1871
+ },
+ {
+  "challenge": "ENGINE 1 BLEED",
+  "response": "ON",
+  "code": 1740
+ },
+ {
+  "challenge": "ENGINE 1 BLEED",
+  "response": "OFF",
+  "code": 1741
+ },
+ {
+  "challenge": "ENGINE 2 BLEED",
+  "response": "ON",
+  "code": 1750
+ },
+ {
+  "challenge": "ENGINE 2 BLEED",
+  "response": "OFF",
+  "code": 1751
+ },
+ {
+  "challenge": "ENGINE BLEEDS",
+  "response": "ON",
+  "code": 1760
+ },
+ {
+  "challenge": "ENGINE BLEEDS",
+  "response": "OFF",
+  "code": 1761
+ },
+ {
+  "challenge": "CROSS BLEED",
+  "response": "SHUT",
+  "code": 1770
+ },
+ {
+  "challenge": "CROSS BLEED",
+  "response": "AUTO",
+  "code": 1771
+ },
+ {
+  "challenge": "CROSS BLEED",
+  "response": "OPEN",
+  "code": 1772
+ },
+ {
+  "challenge": "HOT AIR 1",
+  "response": "ON",
+  "code": 1780
+ },
+ {
+  "challenge": "HOT AIR 1",
+  "response": "OFF",
+  "code": 1781
+ },
+ {
+  "challenge": "HOT AIR 2",
+  "response": "ON",
+  "code": 1790
+ },
+ {
+  "challenge": "HOT AIR 2",
+  "response": "OFF",
+  "code": 1791
+ },
+ {
+  "challenge": "CABIN FANS",
+  "response": "ON",
+  "code": 1800
+ },
+ {
+  "challenge": "CABIN FANS",
+  "response": "OFF",
+  "code": 1801
+ },
+ {
+  "challenge": "AVIONICS EXTRACT",
+  "response": "AUTO",
+  "code": 1810
+ },
+ {
+  "challenge": "AVIONICS EXTRACT",
+  "response": "OVERRIDE",
+  "code": 1811
+ },
+ {
+  "challenge": "LANDING ELEVATION",
+  "response": "AUTO",
+  "code": 1850
+ },
+ {
+  "challenge": "CABIN PRESSURE MODE",
+  "response": "AUTO",
+  "code": 1860
+ },
+ {
+  "challenge": "CABIN PRESSURE MODE",
+  "response": "MANUAL",
+  "code": 1861
+ },
+ {
+  "challenge": "BEACON",
+  "response": "ON",
+  "code": 1900
+ },
+ {
+  "challenge": "BEACON",
+  "response": "OFF",
+  "code": 1901
+ },
+ {
+  "challenge": "WING LIGHTS",
+  "response": "ON",
+  "code": 1910
+ },
+ {
+  "challenge": "WING LIGHTS",
+  "response": "OFF",
+  "code": 1911
+ },
+ {
+  "challenge": "NAV AND LOGO LIGHTS",
+  "response": "ON",
+  "code": 1920
+ },
+ {
+  "challenge": "NAV AND LOGO LIGHTS",
+  "response": "OFF",
+  "code": 1921
+ },
+ {
+  "challenge": "NOSE LIGHT",
+  "response": "OFF",
+  "code": 1930
+ },
+ {
+  "challenge": "NOSE LIGHT",
+  "response": "TAXI",
+  "code": 1931
+ },
+ {
+  "challenge": "NOSE LIGHT",
+  "response": "TAKEOFF",
+  "code": 1932
+ },
+ {
+  "challenge": "LANDING LIGHTS",
+  "response": "ON",
+  "code": 1940
+ },
+ {
+  "challenge": "LANDING LIGHTS",
+  "response": "OFF",
+  "code": 1941
+ },
+ {
+  "challenge": "RUNWAY TURN OFF LIGHTS",
+  "response": "ON",
+  "code": 1950
+ },
+ {
+  "challenge": "RUNWAY TURN OFF LIGHTS",
+  "response": "OFF",
+  "code": 1951
+ },
+ {
+  "challenge": "STROBE LIGHTS",
+  "response": "OFF",
+  "code": 1960
+ },
+ {
+  "challenge": "STROBE LIGHTS",
+  "response": "AUTO",
+  "code": 1961
+ },
+ {
+  "challenge": "STROBE LIGHTS",
+  "response": "ON",
+  "code": 1962
+ },
+ {
+  "challenge": "DOME LIGHT",
+  "response": "OFF",
+  "code": 1970
+ },
+ {
+  "challenge": "DOME LIGHT",
+  "response": "DIM",
+  "code": 1971
+ },
+ {
+  "challenge": "DOME LIGHT",
+  "response": "BRIGHT",
+  "code": 1972
+ },
+ {
+  "challenge": "ICE INDICATOR AND STANDBY COMPASS LIGHT",
+  "response": "ON",
+  "code": 1980
+ },
+ {
+  "challenge": "ICE INDICATOR AND STANDBY COMPASS LIGHT",
+  "response": "OFF",
+  "code": 1981
+ },
+ {
+  "challenge": "EMERGENCY EXIT LIGHTS",
+  "response": "OFF",
+  "code": 1990
+ },
+ {
+  "challenge": "EMERGENCY EXIT LIGHTS",
+  "response": "ARM",
+  "code": 1991
+ },
+ {
+  "challenge": "EMERGENCY EXIT LIGHTS",
+  "response": "ON",
+  "code": 1992
+ },
+ {
+  "challenge": "SEAT BELT SIGNS",
+  "response": "OFF",
+  "code": 2000
+ },
+ {
+  "challenge": "SEAT BELT SIGNS",
+  "response": "ON",
+  "code": 2001
+ },
+ {
+  "challenge": "NO SMOKING SIGNS",
+  "response": "OFF",
+  "code": 2010
+ },
+ {
+  "challenge": "NO SMOKING SIGNS",
+  "response": "AUTO",
+  "code": 2011
+ },
+ {
+  "challenge": "NO SMOKING SIGNS",
+  "response": "ON",
+  "code": 2012
+ },
+ {
+  "challenge": "CAPTAIN WIPER",
+  "response": "OFF",
+  "code": 2100
+ },
+ {
+  "challenge": "CAPTAIN WIPER",
+  "response": "SLOW",
+  "code": 2101
+ },
+ {
+  "challenge": "CAPTAIN WIPER",
+  "response": "FAST",
+  "code": 2102
+ },
+ {
+  "challenge": "FIRST OFFICER WIPER",
+  "response": "OFF",
+  "code": 2110
+ },
+ {
+  "challenge": "FIRST OFFICER WIPER",
+  "response": "SLOW",
+  "code": 2111
+ },
+ {
+  "challenge": "FIRST OFFICER WIPER",
+  "response": "FAST",
+  "code": 2112
+ },
+ {
+  "challenge": "WIPERS",
+  "response": "OFF",
+  "code": 2120
+ },
+ {
+  "challenge": "WIPERS",
+  "response": "SLOW",
+  "code": 2121
+ },
+ {
+  "challenge": "WIPERS",
+  "response": "FAST",
+  "code": 2122
+ },
+ {
+  "challenge": "CREW OXYGEN SUPPLY",
+  "response": "ON",
+  "code": 2130
+ },
+ {
+  "challenge": "CREW OXYGEN SUPPLY",
+  "response": "OFF",
+  "code": 2131
+ },
+ {
+  "challenge": "RECORDER GROUND CONTROL",
+  "response": "ON",
+  "code": 2140
+ },
+ {
+  "challenge": "RECORDER GROUND CONTROL",
+  "response": "OFF",
+  "code": 2141
+ },
+ {
+  "challenge": "COCKPIT DOOR",
+  "response": "OPEN",
+  "code": 2150
+ },
+ {
+  "challenge": "COCKPIT DOOR",
+  "response": "CLOSE",
+  "code": 2151
+ },
+ {
+  "challenge": "FLIGHT DIRECTORS",
+  "response": "ON",
+  "code": 2200
+ },
+ {
+  "challenge": "FLIGHT DIRECTORS",
+  "response": "OFF",
+  "code": 2201
+ },
+ {
+  "challenge": "BAROMETERS",
+  "response": "STANDARD",
+  "code": 2210
+ },
+ {
+  "challenge": "BAROMETERS",
+  "response": "QNH",
+  "code": 2211
+ },
+ {
+  "challenge": "BARO UNIT",
+  "response": "HECTOPASCAL",
+  "code": 2220
+ },
+ {
+  "challenge": "BARO UNIT",
+  "response": "INCHES",
+  "code": 2221
+ },
+ {
+  "challenge": "TERRAIN ON CAPTAIN ND",
+  "response": "ON",
+  "code": 2230
+ },
+ {
+  "challenge": "TERRAIN ON CAPTAIN ND",
+  "response": "OFF",
+  "code": 2231
+ },
+ {
+  "challenge": "TERRAIN ON FIRST OFFICER ND",
+  "response": "ON",
+  "code": 2240
+ },
+ {
+  "challenge": "TERRAIN ON FIRST OFFICER ND",
+  "response": "OFF",
+  "code": 2241
+ },
+ {
+  "challenge": "CONSTRAINTS ON FIRST OFFICER ND",
+  "response": "ON",
+  "code": 2250
+ },
+ {
+  "challenge": "CONSTRAINTS ON FIRST OFFICER ND",
+  "response": "OFF",
+  "code": 2251
+ },
+ {
+  "challenge": "CAPTAIN ND MODE",
+  "response": "LS",
+  "code": 2260
+ },
+ {
+  "challenge": "CAPTAIN ND MODE",
+  "response": "VOR",
+  "code": 2261
+ },
+ {
+  "challenge": "CAPTAIN ND MODE",
+  "response": "NAV",
+  "code": 2262
+ },
+ {
+  "challenge": "CAPTAIN ND MODE",
+  "response": "ARC",
+  "code": 2263
+ },
+ {
+  "challenge": "CAPTAIN ND MODE",
+  "response": "PLAN",
+  "code": 2264
+ },
+ {
+  "challenge": "FIRST OFFICER ND MODE",
+  "response": "LS",
+  "code": 2270
+ },
+ {
+  "challenge": "FIRST OFFICER ND MODE",
+  "response": "VOR",
+  "code": 2271
+ },
+ {
+  "challenge": "FIRST OFFICER ND MODE",
+  "response": "NAV",
+  "code": 2272
+ },
+ {
+  "challenge": "FIRST OFFICER ND MODE",
+  "response": "ARC",
+  "code": 2273
+ },
+ {
+  "challenge": "FIRST OFFICER ND MODE",
+  "response": "PLAN",
+  "code": 2274
+ },
+ {
+  "challenge": "CAPTAIN ND RANGE",
+  "response": "10",
+  "code": 2280
+ },
+ {
+  "challenge": "CAPTAIN ND RANGE",
+  "response": "20",
+  "code": 2281
+ },
+ {
+  "challenge": "CAPTAIN ND RANGE",
+  "response": "40",
+  "code": 2282
+ },
+ {
+  "challenge": "CAPTAIN ND RANGE",
+  "response": "80",
+  "code": 2283
+ },
+ {
+  "challenge": "CAPTAIN ND RANGE",
+  "response": "160",
+  "code": 2284
+ },
+ {
+  "challenge": "CAPTAIN ND RANGE",
+  "response": "320",
+  "code": 2285
+ },
+ {
+  "challenge": "FIRST OFFICER ND RANGE",
+  "response": "10",
+  "code": 2290
+ },
+ {
+  "challenge": "FIRST OFFICER ND RANGE",
+  "response": "20",
+  "code": 2291
+ },
+ {
+  "challenge": "FIRST OFFICER ND RANGE",
+  "response": "40",
+  "code": 2292
+ },
+ {
+  "challenge": "FIRST OFFICER ND RANGE",
+  "response": "80",
+  "code": 2293
+ },
+ {
+  "challenge": "FIRST OFFICER ND RANGE",
+  "response": "160",
+  "code": 2294
+ },
+ {
+  "challenge": "FIRST OFFICER ND RANGE",
+  "response": "320",
+  "code": 2295
+ },
+ {
+  "challenge": "MASTER CAUTION",
+  "response": "RESET",
+  "code": 2300
+ },
+ {
+  "challenge": "MASTER WARNING",
+  "response": "RESET",
+  "code": 2310
+ },
+ {
+  "challenge": "ECAM EMERGENCY CANCEL",
+  "response": "PRESS",
+  "code": 2320
+ },
+ {
+  "challenge": "ECAM RECALL",
+  "response": "PRESS",
+  "code": 2330
+ },
+ {
+  "challenge": "ECAM CLEAR",
+  "response": "PRESS",
+  "code": 2340
+ },
+ {
+  "challenge": "TAKEOFF CONFIG TEST",
+  "response": "TEST",
+  "code": 2350
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "ENGINE",
+  "code": 2400
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "BLEED",
+  "code": 2401
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "PRESSURE",
+  "code": 2402
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "ELEC AC",
+  "code": 2403
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "ELEC DC",
+  "code": 2404
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "HYDRAULIC",
+  "code": 2405
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "CIRCUIT BREAKERS",
+  "code": 2406
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "APU",
+  "code": 2407
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "CONDITIONING",
+  "code": 2408
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "DOOR",
+  "code": 2409
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "WHEEL",
+  "code": 2410
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "FLIGHT CONTROLS",
+  "code": 2411
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "FUEL",
+  "code": 2412
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "STATUS",
+  "code": 2413
+ },
+ {
+  "challenge": "ECAM PAGE",
+  "response": "ALL",
+  "code": 2414
+ },
+ {
+  "challenge": "AUTOBRAKE",
+  "response": "LOW",
+  "code": 2500
+ },
+ {
+  "challenge": "AUTOBRAKE",
+  "response": "MEDIUM",
+  "code": 2501
+ },
+ {
+  "challenge": "AUTOBRAKE",
+  "response": "MAX",
+  "code": 2502
+ },
+ {
+  "challenge": "BRAKE FANS",
+  "response": "ON",
+  "code": 2510
+ },
+ {
+  "challenge": "BRAKE FANS",
+  "response": "OFF",
+  "code": 2511
+ },
+ {
+  "challenge": "PARKING BRAKE",
+  "response": "SET",
+  "code": 2520
+ },
+ {
+  "challenge": "PARKING BRAKE",
+  "response": "RELEASE",
+  "code": 2521
+ },
+ {
+  "challenge": "GROUND SPOILERS",
+  "response": "ARM",
+  "code": 2530
+ },
+ {
+  "challenge": "GROUND SPOILERS",
+  "response": "DISARM",
+  "code": 2531
+ },
+ {
+  "challenge": "ROW ROP",
+  "response": "ON",
+  "code": 2540
+ },
+ {
+  "challenge": "ROW ROP",
+  "response": "OFF",
+  "code": 2541
+ },
+ {
+  "challenge": "TRANSPONDER",
+  "response": "STANDBY",
+  "code": 2600
+ },
+ {
+  "challenge": "TRANSPONDER",
+  "response": "AUTO",
+  "code": 2601
+ },
+ {
+  "challenge": "TRANSPONDER",
+  "response": "ON",
+  "code": 2602
+ },
+ {
+  "challenge": "TCAS",
+  "response": "STANDBY",
+  "code": 2610
+ },
+ {
+  "challenge": "TCAS",
+  "response": "TA ONLY",
+  "code": 2611
+ },
+ {
+  "challenge": "TCAS",
+  "response": "TA RA",
+  "code": 2612
+ },
+ {
+  "challenge": "TRANSPONDER SYSTEM",
+  "response": "ONE",
+  "code": 2620
+ },
+ {
+  "challenge": "TRANSPONDER SYSTEM",
+  "response": "TWO",
+  "code": 2621
+ },
+ {
+  "challenge": "TRANSPONDER IDENT",
+  "response": "PRESS",
+  "code": 2630
+ },
+ {
+  "challenge": "WEATHER RADAR",
+  "response": "ON",
+  "code": 2640
+ },
+ {
+  "challenge": "WEATHER RADAR",
+  "response": "OFF",
+  "code": 2641
+ },
+ {
+  "challenge": "PREDICTIVE WINDSHEAR",
+  "response": "AUTO",
+  "code": 2650
+ },
+ {
+  "challenge": "PREDICTIVE WINDSHEAR",
+  "response": "OFF",
+  "code": 2651
+ },
+ {
+  "challenge": "GPWS SYSTEM",
+  "response": "ON",
+  "code": 2950
+ },
+ {
+  "challenge": "GPWS SYSTEM",
+  "response": "OFF",
+  "code": 2951
+ },
+ {
+  "challenge": "GPWS GLIDESLOPE MODE",
+  "response": "ON",
+  "code": 2960
+ },
+ {
+  "challenge": "GPWS GLIDESLOPE MODE",
+  "response": "OFF",
+  "code": 2961
+ },
+ {
+  "challenge": "GPWS FLAP MODE",
+  "response": "ON",
+  "code": 2970
+ },
+ {
+  "challenge": "GPWS FLAP MODE",
+  "response": "OFF",
+  "code": 2971
+ },
+ {
+  "challenge": "GPWS LANDING FLAPS 3",
+  "response": "ON",
+  "code": 2980
+ },
+ {
+  "challenge": "GPWS LANDING FLAPS 3",
+  "response": "OFF",
+  "code": 2981
+ },
+ {
+  "challenge": "GPWS TERRAIN",
+  "response": "ON",
+  "code": 2990
+ },
+ {
+  "challenge": "GPWS TERRAIN",
+  "response": "OFF",
+  "code": 2991
+ },
+ {
+  "challenge": "ENGINE MODE",
+  "response": "CRANK",
+  "code": 2700
+ },
+ {
+  "challenge": "ENGINE MODE",
+  "response": "NORMAL",
+  "code": 2701
+ },
+ {
+  "challenge": "ENGINE MODE",
+  "response": "IGNITION",
+  "code": 2702
+ },
+ {
+  "challenge": "AUTOPILOT 1",
+  "response": "ENGAGE",
+  "code": 2800
+ },
+ {
+  "challenge": "AUTOPILOT 2",
+  "response": "ENGAGE",
+  "code": 2810
+ },
+ {
+  "challenge": "AUTOTHRUST",
+  "response": "PRESS",
+  "code": 2820
+ },
+ {
+  "challenge": "APPROACH MODE",
+  "response": "PRESS",
+  "code": 2830
+ },
+ {
+  "challenge": "LOCALIZER MODE",
+  "response": "PRESS",
+  "code": 2840
+ },
+ {
+  "challenge": "ALTITUDE KNOB",
+  "response": "PUSH",
+  "code": 2850
+ },
+ {
+  "challenge": "ALTITUDE KNOB",
+  "response": "PULL",
+  "code": 2851
+ },
+ {
+  "challenge": "HEADING KNOB",
+  "response": "PUSH",
+  "code": 2860
+ },
+ {
+  "challenge": "HEADING KNOB",
+  "response": "PULL",
+  "code": 2861
+ },
+ {
+  "challenge": "SPEED KNOB",
+  "response": "PUSH",
+  "code": 2870
+ },
+ {
+  "challenge": "SPEED KNOB",
+  "response": "PULL",
+  "code": 2871
+ },
+ {
+  "challenge": "VERTICAL SPEED KNOB",
+  "response": "PUSH",
+  "code": 2880
+ },
+ {
+  "challenge": "VERTICAL SPEED KNOB",
+  "response": "PULL",
+  "code": 2881
+ },
+ {
+  "challenge": "HEADING TRACK BUTTON",
+  "response": "PRESS",
+  "code": 2890
+ },
+ {
+  "challenge": "SPEED MACH BUTTON",
+  "response": "PRESS",
+  "code": 2900
+ },
+ {
+  "challenge": "METRIC ALTITUDE",
+  "response": "PRESS",
+  "code": 2910
+ }
+]

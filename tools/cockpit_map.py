@@ -1,11 +1,14 @@
-"""A339 cockpit map : the single source of the switches the SayIntentions co-pilot may operate.
+"""Cockpit map of the ToLiss A339 and A321 : the single source of the switches the SayIntentions co-pilot may operate.
 
 python tools/cockpit_map.py   writes
-  src/A339_pm_2_switches.lua   the switches for FlyWithLua (order codes, no X-Plane command : FlyWithLua's limit)
-  docs/si_items.json           the co-pilot's PM ACTIONS items (challenge, response, code) for Checklist Tuner v2
-  docs/A339_pm_actions.md      the same, readable
+  src/A339_pm_2_switches.lua   the switches for FlyWithLua, one table per aircraft (order codes, no X-Plane command :
+                               FlyWithLua's limit) ; the core picks PM_SWITCHES_BY_TYPE[PM_TYPE]
+  docs/si_items.json           the co-pilot's PM ACTIONS items (challenge, response, code) for Checklist Tuner v2, A339
+  docs/si_items_A321.json      the same for the A321 (A321neo / LR / XLR : PLANE_ICAO A21N, or A321)
+  docs/A339_pm_actions.md, docs/A321_pm_actions.md   the same, readable
 
-Each switch : E(id, name, code, positions, **options). A position : P(word, actions..., **options).
+Each switch : E(id, name, code, positions, **options), only=("A339",) for one aircraft (default : both ; the same id may
+be defined once per aircraft). A position : P(word, actions..., **options).
 Actions are Lua statements (helpers L, S, C, H below). Options : ground=True (refused in flight),
 confirm="question?" (read back, done on "confirm"), confirm_in_flight="question?", check="lua function name".
 Codes : a switch owns code .. code + 9 (one per position), never renumber a switch already in the co-pilot's checklist.
@@ -37,11 +40,12 @@ def P(word, *actions, **opts):
     return {"word": word, "actions": list(actions), **opts}
 
 
+TYPES = ("A339", "A321")
 SWITCHES = []
 
 
-def E(id, name, code, positions, **opts):
-    SWITCHES.append({"id": id, "name": name, "code": code, "positions": positions, **opts})
+def E(id, name, code, positions, only=TYPES, **opts):
+    SWITCHES.append({"id": id, "name": name, "code": code, "positions": positions, "only": only, **opts})
 
 
 # ---------------- ADIRS ----------------
@@ -67,10 +71,13 @@ for n, idx, code in ((1, 5, 1100), (2, 6, 1110)):
                                           P("OFF", S("AirbusFBW/ElecOHPArray", 0, idx), ground=True)])
 E("batteries", "BATTERIES", 1120, [P("ON", S("AirbusFBW/ElecOHPArray", 1, 5), S("AirbusFBW/ElecOHPArray", 1, 6)),
                                     P("OFF", S("AirbusFBW/ElecOHPArray", 0, 5), S("AirbusFBW/ElecOHPArray", 0, 6), ground=True)])
-E("apu_bat", "APU BATTERY", 1130, [P("ON", S("AirbusFBW/ElecOHPArray", 1, 16)), P("OFF", S("AirbusFBW/ElecOHPArray", 0, 16), ground=True)])
+E("apu_bat", "APU BATTERY", 1130, [P("ON", S("AirbusFBW/ElecOHPArray", 1, 16)), P("OFF", S("AirbusFBW/ElecOHPArray", 0, 16), ground=True)], only=("A339",))
 E("ext_pwr", "EXTERNAL POWER", 1140, [
     P("ON", S("AirbusFBW/ElecOHPArray", 1, 15), S("AirbusFBW/ElecOHPArray", 1, 3), ground=True),
-    P("OFF", S("AirbusFBW/ElecOHPArray", 0, 15), S("AirbusFBW/ElecOHPArray", 0, 3))])
+    P("OFF", S("AirbusFBW/ElecOHPArray", 0, 15), S("AirbusFBW/ElecOHPArray", 0, 3))], only=("A339",))
+# A321 : one EXT PWR pushbutton (ElecOHPArray[3], checked 10.11.2026 with the command)
+E("ext_pwr", "EXTERNAL POWER", 1140, [P("ON", C("toliss_airbus/eleccommands/ExtPowOn"), ground=True),
+                                      P("OFF", C("toliss_airbus/eleccommands/ExtPowOff"))], only=("A321",))
 for n, idx, code in ((1, 0, 1150), (2, 1, 1160)):
     E(f"gen_{n}", f"GENERATOR {n}", code, [P("ON", S("AirbusFBW/ElecOHPArray", 1, idx)), P("OFF", S("AirbusFBW/ElecOHPArray", 0, idx))])
 E("apu_gen", "APU GENERATOR", 1170, [P("ON", S("AirbusFBW/ElecOHPArray", 1, 2)), P("OFF", S("AirbusFBW/ElecOHPArray", 0, 2))])
@@ -81,26 +88,38 @@ E("galley", "GALLEY", 1210, [P("ON", S("AirbusFBW/ElecOHPArray", 1, 9)), P("OFF"
 E("emer_gen_test", "EMERGENCY GENERATOR TEST", 1220, [P("TEST", H("toliss_airbus/eleccommands/PressEmerGenTestButton"), ground=True)])
 
 # ---------------- FUEL ----------------
-PUMPS = (("left_pump_1", "LEFT FUEL PUMP 1", 0), ("left_pump_2", "LEFT FUEL PUMP 2", 1),
-         ("right_pump_1", "RIGHT FUEL PUMP 1", 4), ("right_pump_2", "RIGHT FUEL PUMP 2", 5),
-         ("center_left_pump", "CENTER TANK LEFT PUMP", 2), ("center_right_pump", "CENTER TANK RIGHT PUMP", 3),
-         ("left_stby_pump", "LEFT STANDBY FUEL PUMP", 8), ("right_stby_pump", "RIGHT STANDBY FUEL PUMP", 9))
-for k, (pid, pname, idx) in enumerate(PUMPS):
+# wing pumps : same indices on the A339 and the A321 (A321 checked 10.11.2026 with toliss_airbus/fuelcommands) ;
+# indices 2 / 3 are the center tank pumps on the A339, the center tank transfer valves (CTR TK L / R XFR) on the A321
+PUMPS = (("left_pump_1", "LEFT FUEL PUMP 1", 0, TYPES), ("left_pump_2", "LEFT FUEL PUMP 2", 1, TYPES),
+         ("right_pump_1", "RIGHT FUEL PUMP 1", 4, TYPES), ("right_pump_2", "RIGHT FUEL PUMP 2", 5, TYPES),
+         ("center_left_pump", "CENTER TANK LEFT PUMP", 2, ("A339",)), ("center_right_pump", "CENTER TANK RIGHT PUMP", 3, ("A339",)),
+         ("left_stby_pump", "LEFT STANDBY FUEL PUMP", 8, ("A339",)), ("right_stby_pump", "RIGHT STANDBY FUEL PUMP", 9, ("A339",)))
+for k, (pid, pname, idx, only) in enumerate(PUMPS):
     E(pid, pname, 1300 + 10 * k, [P("ON", S("AirbusFBW/FuelOHPArray", 1, idx)),
-                                  P("OFF", S("AirbusFBW/FuelOHPArray", 0, idx), ground=True)])
+                                  P("OFF", S("AirbusFBW/FuelOHPArray", 0, idx), ground=True)], only=only)
+E("center_left_pump", "CENTER TANK LEFT TRANSFER", 1340, [P("ON", S("AirbusFBW/FuelOHPArray", 1, 2)),
+                                                           P("OFF", S("AirbusFBW/FuelOHPArray", 0, 2), ground=True)], only=("A321",))
+E("center_right_pump", "CENTER TANK RIGHT TRANSFER", 1350, [P("ON", S("AirbusFBW/FuelOHPArray", 1, 3)),
+                                                             P("OFF", S("AirbusFBW/FuelOHPArray", 0, 3), ground=True)], only=("A321",))
 E("main_fuel_pumps", "MAIN FUEL PUMPS", 1380, [
     P("ON", *[S("AirbusFBW/FuelOHPArray", 1, i) for i in (0, 1, 2, 3, 4, 5)]),
-    P("OFF", *[S("AirbusFBW/FuelOHPArray", 0, i) for i in (0, 1, 2, 3, 4, 5)], ground=True)])
+    P("OFF", *[S("AirbusFBW/FuelOHPArray", 0, i) for i in (0, 1, 2, 3, 4, 5)], ground=True)], only=("A339",))
+E("main_fuel_pumps", "MAIN FUEL PUMPS", 1380, [
+    P("ON", *[S("AirbusFBW/FuelOHPArray", 1, i) for i in (0, 1, 4, 5)]),
+    P("OFF", *[S("AirbusFBW/FuelOHPArray", 0, i) for i in (0, 1, 4, 5)], ground=True)], only=("A321",))
 E("stby_fuel_pumps", "STANDBY FUEL PUMPS", 1390, [
     P("ON", S("AirbusFBW/FuelOHPArray", 1, 8), S("AirbusFBW/FuelOHPArray", 1, 9)),
-    P("OFF", S("AirbusFBW/FuelOHPArray", 0, 8), S("AirbusFBW/FuelOHPArray", 0, 9))])
+    P("OFF", S("AirbusFBW/FuelOHPArray", 0, 8), S("AirbusFBW/FuelOHPArray", 0, 9))], only=("A339",))
 E("all_fuel_pumps", "ALL FUEL PUMPS", 1400, [
     P("ON", *[S("AirbusFBW/FuelOHPArray", 1, i) for i in (0, 1, 2, 3, 4, 5, 8, 9)]),
-    P("OFF", *[S("AirbusFBW/FuelOHPArray", 0, i) for i in (0, 1, 2, 3, 4, 5, 8, 9)], ground=True)])
+    P("OFF", *[S("AirbusFBW/FuelOHPArray", 0, i) for i in (0, 1, 2, 3, 4, 5, 8, 9)], ground=True)], only=("A339",))
+E("all_fuel_pumps", "ALL FUEL PUMPS", 1400, [
+    P("ON", *[S("AirbusFBW/FuelOHPArray", 1, i) for i in (0, 1, 2, 3, 4, 5)]),
+    P("OFF", *[S("AirbusFBW/FuelOHPArray", 0, i) for i in (0, 1, 2, 3, 4, 5)], ground=True)], only=("A321",))
 E("center_tank_mode", "CENTER TANK MODE", 1410, [P("AUTO", S("AirbusFBW/FuelOHPArray", 1, 6)), P("MANUAL", S("AirbusFBW/FuelOHPArray", 0, 6))])  # checked 31.10.2026
 E("fuel_crossfeed", "FUEL CROSSFEED", 1420, [P("OPEN", S("AirbusFBW/FuelOHPArray", 1, 7)), P("SHUT", S("AirbusFBW/FuelOHPArray", 0, 7))])
-E("outer_tank_transfer", "OUTER TANK TRANSFER", 1430, [P("ON", S("AirbusFBW/FuelOHPArray", 1, 24)), P("OFF", S("AirbusFBW/FuelOHPArray", 0, 24))])
-E("tail_tank_transfer", "TAIL TANK FORWARD TRANSFER", 1440, [P("ON", S("AirbusFBW/FuelOHPArray", 1, 22)), P("OFF", S("AirbusFBW/FuelOHPArray", 0, 22))])
+E("outer_tank_transfer", "OUTER TANK TRANSFER", 1430, [P("ON", S("AirbusFBW/FuelOHPArray", 1, 24)), P("OFF", S("AirbusFBW/FuelOHPArray", 0, 24))], only=("A339",))
+E("tail_tank_transfer", "TAIL TANK FORWARD TRANSFER", 1440, [P("ON", S("AirbusFBW/FuelOHPArray", 1, 22)), P("OFF", S("AirbusFBW/FuelOHPArray", 0, 22))], only=("A339",))
 
 # ---------------- APU ----------------
 E("apu_master", "APU MASTER", 1500, [P("ON", C("toliss_airbus/apucommands/MasterOn")), P("OFF", C("toliss_airbus/apucommands/MasterOff"))])
@@ -122,7 +141,8 @@ E("pack_1", "PACK 1", 1700, [P("ON", C("toliss_airbus/aircondcommands/Pack1On"))
 E("pack_2", "PACK 2", 1710, [P("ON", C("toliss_airbus/aircondcommands/Pack2On")), P("OFF", C("toliss_airbus/aircondcommands/Pack2Off"))])
 E("packs", "PACKS", 1720, [P("ON", C("toliss_airbus/aircondcommands/Pack1On"), C("toliss_airbus/aircondcommands/Pack2On")),
                            P("OFF", C("toliss_airbus/aircondcommands/Pack1Off"), C("toliss_airbus/aircondcommands/Pack2Off"))])
-E("pack_flow", "PACK FLOW", 1730, [P("LOW", S("AirbusFBW/PackFlowSel", 0)), P("NORMAL", S("AirbusFBW/PackFlowSel", 1)), P("HIGH", S("AirbusFBW/PackFlowSel", 2))])
+E("pack_flow", "PACK FLOW", 1730, [P("LOW", S("AirbusFBW/PackFlowSel", 0)), P("NORMAL", S("AirbusFBW/PackFlowSel", 1)), P("HIGH", S("AirbusFBW/PackFlowSel", 2))], only=("A339",))
+E("econ_flow", "ECON FLOW", 1870, [P("ON", C("toliss_airbus/aircondcommands/EconFlowOn")), P("OFF", C("toliss_airbus/aircondcommands/EconFlowOff"))], only=("A321",))
 E("eng1_bleed", "ENGINE 1 BLEED", 1740, [P("ON", S("AirbusFBW/ENG1BleedSwitch", 1)), P("OFF", S("AirbusFBW/ENG1BleedSwitch", 0))])
 E("eng2_bleed", "ENGINE 2 BLEED", 1750, [P("ON", S("AirbusFBW/ENG2BleedSwitch", 1)), P("OFF", S("AirbusFBW/ENG2BleedSwitch", 0))])
 E("eng_bleeds", "ENGINE BLEEDS", 1760, [P("ON", S("AirbusFBW/ENG1BleedSwitch", 1), S("AirbusFBW/ENG2BleedSwitch", 1)),
@@ -132,9 +152,9 @@ E("hot_air_1", "HOT AIR 1", 1780, [P("ON", S("AirbusFBW/HotAirSwitch", 1)), P("O
 E("hot_air_2", "HOT AIR 2", 1790, [P("ON", S("AirbusFBW/HotAirSwitch2", 1)), P("OFF", S("AirbusFBW/HotAirSwitch2", 0))])
 E("cabin_fans", "CABIN FANS", 1800, [P("ON", S("AirbusFBW/CabinFanSwitch", 1)), P("OFF", S("AirbusFBW/CabinFanSwitch", 0))])
 E("avionics_extract", "AVIONICS EXTRACT", 1810, [P("AUTO", S("AirbusFBW/ExtractSwitch", 0)), P("OVERRIDE", S("AirbusFBW/ExtractSwitch", 1))])  # checked 31.10.2026
-E("fwd_cargo_isol", "FORWARD CARGO ISOLATION VALVE", 1820, [P("OPEN", S("AirbusFBW/FwdIsolValve", 1)), P("SHUT", S("AirbusFBW/FwdIsolValve", 0))])  # checked 31.10.2026
-E("bulk_cargo_isol", "BULK CARGO ISOLATION VALVE", 1830, [P("OPEN", S("AirbusFBW/BulkIsolValve", 1)), P("SHUT", S("AirbusFBW/BulkIsolValve", 0))])  # checked 31.10.2026
-E("cargo_hot_air", "CARGO HOT AIR", 1840, [P("ON", S("AirbusFBW/CargoHotAir", 1)), P("OFF", S("AirbusFBW/CargoHotAir", 0))])
+E("fwd_cargo_isol", "FORWARD CARGO ISOLATION VALVE", 1820, [P("OPEN", S("AirbusFBW/FwdIsolValve", 1)), P("SHUT", S("AirbusFBW/FwdIsolValve", 0))], only=("A339",)) # checked 31.10.2026
+E("bulk_cargo_isol", "BULK CARGO ISOLATION VALVE", 1830, [P("OPEN", S("AirbusFBW/BulkIsolValve", 1)), P("SHUT", S("AirbusFBW/BulkIsolValve", 0))], only=("A339",)) # checked 31.10.2026
+E("cargo_hot_air", "CARGO HOT AIR", 1840, [P("ON", S("AirbusFBW/CargoHotAir", 1)), P("OFF", S("AirbusFBW/CargoHotAir", 0))], only=("A339",))
 E("landing_elevation", "LANDING ELEVATION", 1850, [P("AUTO", S("AirbusFBW/LandElev", -3))])
 E("cabin_press_mode", "CABIN PRESSURE MODE", 1860, [P("AUTO", S("AirbusFBW/CabPressMode", 0)), P("MANUAL", S("AirbusFBW/CabPressMode", 1))])
 
@@ -149,8 +169,11 @@ E("strobe", "STROBE LIGHTS", 1960, [P("OFF", L(7, 0)), P("AUTO", L(7, 1)), P("ON
 E("dome", "DOME LIGHT", 1970, [P("OFF", L(8, 0)), P("DIM", L(8, 1)), P("BRIGHT", L(8, 2))])
 E("ice_ind", "ICE INDICATOR AND STANDBY COMPASS LIGHT", 1980, [P("ON", L(9, 1)), P("OFF", L(9, 0))])
 E("emer_exit", "EMERGENCY EXIT LIGHTS", 1990, [P("OFF", L(10, 0)), P("ARM", L(10, 1)), P("ON", L(10, 2))])
-E("seat_belts", "SEAT BELT SIGNS", 2000, [P("OFF", L(11, 0)), P("AUTO", L(11, 1)), P("ON", L(11, 2))])
-E("ped", "NO PORTABLE ELECTRONIC DEVICES", 2010, [P("OFF", L(12, 0)), P("AUTO", L(12, 1)), P("ON", L(12, 2))])
+E("seat_belts", "SEAT BELT SIGNS", 2000, [P("OFF", L(11, 0)), P("AUTO", L(11, 1)), P("ON", L(11, 2))], only=("A339",))
+E("ped", "NO PORTABLE ELECTRONIC DEVICES", 2010, [P("OFF", L(12, 0)), P("AUTO", L(12, 1)), P("ON", L(12, 2))], only=("A339",))
+# A321 (checked 10.11.2026 : FSBSignOn -> [11] 0 -> 1, NSSignUp -> [12] 0 -> 1 -> 2) ; same codes, no AUTO for the belts
+E("seat_belts", "SEAT BELT SIGNS", 2000, [P("OFF", L(11, 0)), P("ON", L(11, 1))], only=("A321",))
+E("ped", "NO SMOKING SIGNS", 2010, [P("OFF", L(12, 0)), P("AUTO", L(12, 1)), P("ON", L(12, 2))], only=("A321",))
 
 # ---------------- WIPERS / OXYGEN / RECORDER / DOOR ----------------
 E("wiper_capt", "CAPTAIN WIPER", 2100, [P("OFF", S("AirbusFBW/LeftWiperSwitch", 0)), P("SLOW", S("AirbusFBW/LeftWiperSwitch", 1)), P("FAST", S("AirbusFBW/LeftWiperSwitch", 2))])
@@ -243,38 +266,7 @@ def lua_string(s):
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
-codes = {}
-for sw in SWITCHES:
-    assert len(sw["positions"]) <= 10, sw["id"]
-    for i, _ in enumerate(sw["positions"]):
-        code = sw["code"] + i
-        assert code not in codes, f"code {code} used twice ({codes.get(code)} / {sw['id']})"
-        codes[code] = sw["id"]
-
-out = ["-- GENERATED by tools/cockpit_map.py : do not edit, edit the map and run it again.",
-       "-- A339 cockpit switches the SayIntentions co-pilot may operate, by order code (SpeedyCopilot/si/order).",
-       "", "if not string.find(PLANE_AUTHOR, \"Gliding\") or PM_do == nil then return end", "", "PM_SWITCHES = {"]
-items = []
-for sw in SWITCHES:
-    out.append(f"\t{sw['id']} = {{ name = {lua_string(sw['name'])}, code = {sw['code']}, pos = {{")
-    for i, p in enumerate(sw["positions"]):
-        opts = ""
-        if p.get("ground"): opts += ", ground = true"
-        if p.get("confirm"): opts += f", confirm = {lua_string(p['confirm'])}"
-        if p.get("confirm_in_flight"): opts += f", confirm_in_flight = {lua_string(p['confirm_in_flight'])}"
-        if p.get("check"): opts += f", check = {p['check']}"
-        body = " ".join(p["actions"])
-        out.append(f"\t\t{{ word = {lua_string(p['word'])}, slug = \"{slug(p['word'])}\", run = function() {body} end{opts} }},")
-        items.append({"challenge": sw["name"], "response": p["word"], "code": sw["code"] + i})
-    out.append("\t} },")
-out.append("}")
-out.append("")
-out.append("PM_register_switches()")
-out.append("")
-with open(os.path.join(ROOT, "src", "A339_pm_2_switches.lua"), "w", encoding="utf-8", newline="\n") as f:
-    f.write("\n".join(out))
-
-# PF orders and procedures (codes of A339_pm_1_core.lua and A339_pm_3_procedures.lua)
+# PF orders and procedures (codes of A339_pm_1_core.lua and A339_pm_3_procedures.lua), the same on both aircraft
 # flaps : one distinct challenge per position ("FLAPS / ONE" and "FLAPS / TWO" differed only by the response and the co-pilot
 # pressed TWO on "flaps one")
 EXTRA = [("FLAPS UP", "SET", 10), ("FLAPS ONE", "SET", 11), ("FLAPS TWO", "SET", 12), ("FLAPS THREE", "SET", 13),
@@ -295,17 +287,51 @@ EXTRA = [("FLAPS UP", "SET", 10), ("FLAPS ONE", "SET", 11), ("FLAPS TWO", "SET",
          ("APPROACH PROCEDURE", "START", 113), ("AFTER LANDING PROCEDURE", "START", 114),
          ("PARKING PROCEDURE", "START", 115), ("SECURING THE AIRCRAFT PROCEDURE", "START", 116),
          ("ENGINE START PROCEDURE", "ABORT", 117), ("GO AROUND PROCEDURE", "START", 118)]
-for challenge, response, code in EXTRA:
-    assert code not in codes, code
-items = [{"challenge": c, "response": r, "code": k} for c, r, k in EXTRA] + items
 
-with open(os.path.join(ROOT, "docs", "si_items.json"), "w", encoding="utf-8") as f:
-    json.dump(items, f, ensure_ascii=False, indent=1)
-
-md = ["# PM ACTIONS — переключатели (сгенерировано tools/cockpit_map.py)", "",
-      "Пункт Checklist Tuner: Challenge / Response, Full Automatic, DREF `SpeedyCopilot/si/order` = код.", "",
-      "| Challenge | Response | Код |", "|---|---|---|"]
-md += [f"| {it['challenge']} | {it['response']} | {it['code']} |" for it in items]
-with open(os.path.join(ROOT, "docs", "A339_pm_actions.md"), "w", encoding="utf-8") as f:
-    f.write("\n".join(md) + "\n")
-print(len(SWITCHES), "switches,", len(items), "positions / items")
+out = ["-- GENERATED by tools/cockpit_map.py : do not edit, edit the map and run it again.",
+       "-- Cockpit switches the SayIntentions co-pilot may operate, by order code (SpeedyCopilot/si/order), per aircraft.",
+       "", "if not string.find(PLANE_AUTHOR, \"Gliding\") or PM_do == nil then return end", "", "PM_SWITCHES_BY_TYPE = {"]
+total = {}
+for ac in TYPES:
+    switches = [sw for sw in SWITCHES if ac in sw["only"]]
+    codes, ids = {}, set()
+    for sw in switches:
+        assert len(sw["positions"]) <= 10, sw["id"]
+        assert sw["id"] not in ids, f"{ac} : switch {sw['id']} defined twice"
+        ids.add(sw["id"])
+        for k, _ in enumerate(sw["positions"]):
+            code = sw["code"] + k
+            assert code not in codes, f"{ac} : code {code} used twice ({codes.get(code)} / {sw['id']})"
+            codes[code] = sw["id"]
+    for challenge, response, code in EXTRA:
+        assert code not in codes, code
+    out.append(f"\t{ac} = {{")
+    items = []
+    for sw in switches:
+        out.append(f"\t\t{sw['id']} = {{ name = {lua_string(sw['name'])}, code = {sw['code']}, pos = {{")
+        for k, p in enumerate(sw["positions"]):
+            opts = ""
+            if p.get("ground"): opts += ", ground = true"
+            if p.get("confirm"): opts += f", confirm = {lua_string(p['confirm'])}"
+            if p.get("confirm_in_flight"): opts += f", confirm_in_flight = {lua_string(p['confirm_in_flight'])}"
+            if p.get("check"): opts += f", check = {p['check']}"
+            body = " ".join(p["actions"])
+            out.append(f"\t\t\t{{ word = {lua_string(p['word'])}, slug = \"{slug(p['word'])}\", run = function() {body} end{opts} }},")
+            items.append({"challenge": sw["name"], "response": p["word"], "code": sw["code"] + k})
+        out.append("\t\t} },")
+    out.append("\t},")
+    items = [{"challenge": c, "response": r, "code": k} for c, r, k in EXTRA] + items
+    total[ac] = (len(switches), len(items))
+    name = "si_items.json" if ac == "A339" else f"si_items_{ac}.json"   # si_items.json : the A339, as before
+    with open(os.path.join(ROOT, "docs", name), "w", encoding="utf-8") as f:
+        json.dump(items, f, ensure_ascii=False, indent=1)
+    md = [f"# PM ACTIONS {ac} (generated by tools/cockpit_map.py)", "",
+          "Checklist Tuner item: Challenge / Response, Full Automatic, DREF `SpeedyCopilot/si/order` = code.", "",
+          "| Challenge | Response | Code |", "|---|---|---|"]
+    md += [f"| {it['challenge']} | {it['response']} | {it['code']} |" for it in items]
+    with open(os.path.join(ROOT, "docs", f"{ac}_pm_actions.md"), "w", encoding="utf-8") as f:
+        f.write("\n".join(md) + "\n")
+out += ["}", "", "PM_SWITCHES = PM_SWITCHES_BY_TYPE[PM_TYPE]", "PM_register_switches()", ""]
+with open(os.path.join(ROOT, "src", "A339_pm_2_switches.lua"), "w", encoding="utf-8", newline="\n") as f:
+    f.write("\n".join(out))
+print(", ".join(f"{ac} : {s} switches, {n} items" for ac, (s, n) in total.items()))

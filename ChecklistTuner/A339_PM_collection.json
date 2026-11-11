@@ -1,7 +1,7 @@
 {
   "__export_version": 1,
   "name": "A339 PM - SayIntentions co-pilot",
-  "notes": "A339 PM 1.0.2-beta: the PM's normal A330 checklists and the PM ACTIONS items (cockpit actions).",
+  "notes": "A339 PM 1.1.0-beta for the ToLiss A330-900: the PM's normal checklists and the PM ACTIONS items (cockpit actions).",
   "shared": 0,
   "admin_disabled": 0,
   "checklists": [

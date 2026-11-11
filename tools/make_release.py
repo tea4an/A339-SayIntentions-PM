@@ -2,9 +2,10 @@
 
     python tools/make_release.py [version]
 
-Writes COMMANDS.txt, ChecklistTuner/A339_PM_collection.json (Checklist Tuner "Import JSON") and
-dist/A339-SayIntentions-PM-<version>.zip (what a pilot downloads: FlyWithLua/Scripts + ChecklistTuner + docs).
-src/A339_pm_2_switches.lua and docs/si_items.json come from tools/cockpit_map.py.
+Writes COMMANDS.txt, ChecklistTuner/A339_PM_collection.json and A321_PM_collection.json (Checklist Tuner
+"Import JSON", one per aircraft) and dist/A339-SayIntentions-PM-<version>.zip (what a pilot downloads:
+FlyWithLua/Scripts + ChecklistTuner + docs). src/A339_pm_2_switches.lua and docs/si_items*.json come from
+tools/cockpit_map.py.
 """
 import json
 import shutil
@@ -16,7 +17,11 @@ VERSION = sys.argv[1] if len(sys.argv) > 1 else "dev"
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
 PACKAGE = DIST / "A339-SayIntentions-PM"
-ITEMS = json.loads((ROOT / "docs" / "si_items.json").read_text(encoding="utf-8"))
+# PM ACTIONS items per aircraft (si_items.json : the A339) ; the PF orders and procedures are the same on both
+ITEM_FILES = {"A339": "si_items.json", "A321": "si_items_A321.json"}
+ITEMS_OF = {ac: json.loads((ROOT / "docs" / f).read_text(encoding="utf-8")) for ac, f in ITEM_FILES.items()}
+ITEMS = ITEMS_OF["A339"]
+AIRCRAFT_NAME = {"A339": "ToLiss A330-900", "A321": "ToLiss A321 (neo, LR, XLR)"}
 
 # the PM's normal A330 checklists : [challenge, response shown, challenge spoken, response spoken, accepted answers].
 # Spoken forms, or the PM spells "T.O RWY" letter by letter. Named "... Checklist" so that "<name> procedure" is never
@@ -82,8 +87,10 @@ NORMAL_NOTES = ("Run this checklist only when the pilot says the word checklist.
 PM_CHUNK = 70  # one SayIntentions checklist of 290 items never worked; up to ~76 do
 
 
-def collection():
-    """The Checklist Tuner collection, in its own export format (Import JSON)."""
+def collection(ac="A339"):
+    """The Checklist Tuner collection of one aircraft, in its own export format (Import JSON). The normal checklists
+    are the same on both : the A320 and A330 normal checklists have the same items."""
+    items = ITEMS_OF[ac]
     checklists = []
     for n, (name, rows) in enumerate(NORMAL.items(), 1):
         checklists.append({
@@ -95,8 +102,8 @@ def collection():
                        "response_visual_only": r, "speak_response": 0, "response_pronounced": rp,
                        "speak_pause_seconds": 0, "sort_order": k, "admin_disabled": 0, "variables": []}
                       for k, (c, r, cp, rp, ok) in enumerate(rows, 1)]})
-    for part in range(0, len(ITEMS), PM_CHUNK):
-        chunk = ITEMS[part:part + PM_CHUNK]
+    for part in range(0, len(items), PM_CHUNK):
+        chunk = items[part:part + PM_CHUNK]
         checklists.append({
             "name": "PM ACTIONS %d" % (part // PM_CHUNK + 1), "category": "abnormal", "full_auto": 0,
             "notes": "Never run as a checklist: these items tell the PM what it can do in the cockpit.",
@@ -109,16 +116,14 @@ def collection():
                                       "variable_type": "action", "action_value": str(i["code"]),
                                       "validation_low": None, "validation_high": None}]}
                       for k, i in enumerate(chunk, 1)]})
-    return {"__export_version": 1, "name": "A339 PM - SayIntentions co-pilot",
-            "notes": "A339 PM %s: the PM's normal A330 checklists and the PM ACTIONS items (cockpit actions)." % VERSION,
+    return {"__export_version": 1, "name": "%s PM - SayIntentions co-pilot" % ac,
+            "notes": "A339 PM %s for the %s: the PM's normal checklists and the PM ACTIONS items (cockpit actions)."
+                     % (VERSION, AIRCRAFT_NAME[ac]),
             "shared": 0, "admin_disabled": 0, "checklists": checklists}
 
 
 def commands():
     """COMMANDS.txt : everything the co-pilot (the bridge) understands."""
-    groups = {}
-    for i in ITEMS:
-        groups.setdefault(i["challenge"], []).append(i)
     out = [
         "A339 PM %s - what you can say to the SayIntentions co-pilot (intercom)" % VERSION,
         "=" * 78, "",
@@ -147,7 +152,8 @@ def commands():
         "  after landing procedure                       flaps 0, spoilers disarm, lights, radar/PWS off, ...",
         "  parking procedure                             engines off + parking brake: beacon off, fuel pumps off ...",
         "  securing the aircraft procedure               ADIRS off, oxygen off, APU off, batteries off",
-        "  The PM reports '<name> procedure done.' A procedure never sets SEAT BELTS or PED to OFF.", "",
+        "  The PM reports '<name> procedure done.' A procedure never sets SEAT BELTS or PED to OFF.",
+        "  A step for a switch the aircraft does not have is skipped (APU BAT, SEAT BELTS AUTO on the A321).", "",
         "FLAPS, GEAR (one flap step at a time, VFE / S / F speed checks)",
         "-" * 78,
         "  flaps up / zero / one / two / three / full     gear up / gear down", "",
@@ -169,14 +175,17 @@ def commands():
         "  start APU                        the START button 5 s after APU MASTER",
         "  APU bleed on                     waits for APU AVAIL; refused above FL200 with packs on",
         "  all anti ice on / off            engine and wing anti ice", "",
-        "EVERY SWITCH  (name : positions)   e.g. 'seat belts on', 'TCAS TA RA', 'captain wiper slow'",
-        "-" * 78,
     ]
-    for name, items in groups.items():
-        if items[0]["code"] < 200:
-            continue
-        out.append("  %-44s %s" % (name.lower(), " / ".join(i["response"].lower() for i in items)))
-    out += ["", "UNDERSTOOD ALSO  (other names and speech recognition slips)", "-" * 78,
+    for ac, items in ITEMS_OF.items():
+        groups = {}
+        for i in items:
+            groups.setdefault(i["challenge"], []).append(i)
+        out += ["EVERY SWITCH, %s  (name : positions)   e.g. 'seat belts on', 'TCAS TA RA'" % AIRCRAFT_NAME[ac], "-" * 78]
+        for name, its in groups.items():
+            if its[0]["code"] >= 200:
+                out.append("  %-44s %s" % (name.lower(), " / ".join(i["response"].lower() for i in its)))
+        out.append("")
+    out += ["UNDERSTOOD ALSO  (other names and speech recognition slips)", "-" * 78,
             "  seatbelts, sit belts = seat belt signs        no portable devices, PED = no portable electronic devices",
             "  nav lights, logo lights = nav and logo lights interior light = dome light (on = bright)",
             "  linden lights = landing lights                wind lights = wing lights",
@@ -197,7 +206,8 @@ def commands():
 def main():
     (ROOT / "COMMANDS.txt").write_text(commands(), encoding="utf-8")
     (ROOT / "ChecklistTuner").mkdir(exist_ok=True)
-    (ROOT / "ChecklistTuner" / "A339_PM_collection.json").write_text(json.dumps(collection(), indent=2), encoding="utf-8")
+    for ac in ITEMS_OF:
+        (ROOT / "ChecklistTuner" / ("%s_PM_collection.json" % ac)).write_text(json.dumps(collection(ac), indent=2), encoding="utf-8")
     if PACKAGE.exists():
         shutil.rmtree(PACKAGE)
     scripts = PACKAGE / "FlyWithLua" / "Scripts"
@@ -206,7 +216,8 @@ def main():
         shutil.copy(ROOT / "src" / f, scripts / f)
     for f in ("si_bridge.ps1", "run_hidden.vbs"):
         shutil.copy(ROOT / "src" / "A339_pm" / f, scripts / "A339_pm" / f)
-    shutil.copy(ROOT / "docs" / "si_items.json", scripts / "A339_pm" / "si_items.json")
+    for f in ITEM_FILES.values():
+        shutil.copy(ROOT / "docs" / f, scripts / "A339_pm" / f)
     (scripts / "A339_pm" / "PUT si_dev_key.txt HERE.txt").write_text(
         "Create a file named si_dev_key.txt in this folder containing only your SayIntentions developer key.\n"
         "See README.md, step 2.\n", encoding="utf-8")
